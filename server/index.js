@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const path = require("path")
-// const authRoutes = require('./routes/auth.routes');
+const authRoutes = require("./routes/auth.route");
 // const userRoutes = require('./routes/user.routes');
 // const bookRoutes = require('./routes/book.routes');
 // const errorMiddleware = require("./middlewares/error.middleware");
@@ -20,13 +20,12 @@ app.use(cookieParser());
 app.use(cors({ credentials: true, origin }));
 
 // Routes
+app.use("/api/auth", authRoutes);
 // app.use('/api/book', bookRoutes);
-// app.use('/api/auth', authRoutes);
 // app.use('/api/user', userRoutes);
 
 // app.use(errorMiddleware);
 
-// Server
 (async () => {
     try {
         app.listen(PORT, () => console.log(`Server has been started on port ${PORT}`));

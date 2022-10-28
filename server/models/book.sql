@@ -2,7 +2,7 @@ create TABLE "book" (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255),
     author VARCHAR(255),
-    path TEXT,
+    book_path TEXT,
     pages INT,
     current_page INT DEFAULT 0,
     is_reading BOOLEAN DEFAULT false,
