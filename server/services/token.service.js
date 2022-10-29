@@ -53,6 +53,13 @@ class TokenService{
             return null;
         }
     }
+    validateAccessToken(token) {
+        try {
+            return jwt.verify(token, process.env.JWT_ACCESS_TOKEN);
+        } catch (e) {
+            return null;
+        }
+    }
 }
 
 module.exports = new TokenService();

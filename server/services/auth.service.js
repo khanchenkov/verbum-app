@@ -95,10 +95,9 @@ class AuthService {
         }
         const email = await tokenService.validateResetToken(resetToken).tokenPayload.email;
         const hashPassword = await bcrypt.hash(password, 3);
-        await pg("user").update({password: hashPassword}).where("email", email);
+        await pg("user").update({user_password: hashPassword}).where("email", email);
         return {message: "Password has been successfully changed."};
     }
 }
-
 
 module.exports = new AuthService();
