@@ -2,20 +2,20 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const path = require("path")
+const path = require("path");
+const errorMiddleware = require("./middlewares/error.middleware");
 const authRoutes = require("./routes/auth.route");
 // const userRoutes = require('./routes/user.routes');
 // const bookRoutes = require('./routes/book.routes');
-// const errorMiddleware = require("./middlewares/error.middleware");
 
 const app = express();
 const PORT = process.env.PORT ?? 5000;
-const origin = process.env.PRODUCTION === 'true' ? process.env.DEPLOY_CLIENT_URL : process.env.LOCAL_CLIENT_URL;
+const origin = process.env.PRODUCTION === "true" ? process.env.DEPLOY_CLIENT_URL : process.env.LOCAL_CLIENT_URL;
 
 // middlewares
 app.use(express.json());
 // app.use(express.urlencoded({extended: false}));
-app.use('/data', express.static(path.join(__dirname, 'data')));
+app.use("/data", express.static(path.join(__dirname, "data")));
 app.use(cookieParser());
 app.use(cors({ credentials: true, origin }));
 
@@ -24,7 +24,7 @@ app.use("/api/auth", authRoutes);
 // app.use('/api/book', bookRoutes);
 // app.use('/api/user', userRoutes);
 
-// app.use(errorMiddleware);
+app.use(errorMiddleware);
 
 (async () => {
     try {

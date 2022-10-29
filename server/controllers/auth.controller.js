@@ -8,7 +8,7 @@ class AuthController {
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                return next(ApiError.BadRequest("Ошибка при валидации", errors.array()));
+                return next(ApiError.BadRequest("Email or password is invalid.", errors.array()));
             }
             const {email, password} = req.body;
             const userData = await authService.registration(email, password);
@@ -47,63 +47,64 @@ class AuthController {
             next(e);
         }
     }
-
-//     async refresh(req, res, next) {
-//         try {
-//             const {refreshToken} = req.cookies;
-//             const userData = await authService.refresh(refreshToken);
-//             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
-//             return res.json(userData);
-//         } catch (e) {
-//             next(e);
-//         }
-//     }
-//     async forgot(req, res, next) {
-//         try {
-//             const {email} = req.body;
-//             await authService.forgot(email);
-//             return res.send({message: "Ссылка успешно отправлена."})
-//         } catch (e) {
-//             next(e);
-//         }
-//     }
-//     async resetCheck(req, res, next) {
-//         try {
-//             const resetLink = req.params.link;
-//             const {link, userData} = await authService.resetCheck(resetLink);
-//             res.cookie('resetToken', userData.resetToken, {maxAge: 60 * 60 * 1000, httpOnly: true});
-//             return res.redirect(`${CLIENT_URL}/reset/${link}`);
-//         } catch (e) {
-//             next(e);
-//         }
-//     }
-//     async checkLink(req, res, next) {
-//         try {
-//             const link = req.body.link;
-//             const resetToken = req.cookies.resetToken;
-//             const isValidLink = await authService.checkLink(link, resetToken);
-//             return res.json(isValidLink);
-//         } catch (e) {
-//             next(e);
-//         }
-//     }
-//     async reset(req, res, next) {
-//         try {
-//             const {resetToken} = req.cookies;
-//             const {password} = req.body;
-//             const errors = validationResult(req);
-//             console.log(password);
-//             console.log(errors);
-//             if (!errors.isEmpty()) {
-//                 return next(ApiError.BadRequest("Ошибка при валидации", errors.array()));
-//             }
-//             const resetMessage = await authService.reset(resetToken, password);
-//             res.clearCookie('resetToken');
-//             res.json(resetMessage);
-//         } catch (e) {
-//             next(e);
-//         }
-//     }
+    async refresh(req, res, next) {
+        try {
+            const {refreshToken} = req.cookies;
+            const userData = await authService.refresh(refreshToken);
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
+            return res.json(userData);
+        } catch (e) {
+            next(e);
+        }
+    }
+    async forgot(req, res, next) {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequest("Email is invalid.", errors.array()));
+            }
+            const email = req.body.email;
+            await authService.forgot(email);
+            return res.send({message: "Link was successfully sent."})
+        } catch (e) {
+            next(e);
+        }
+    }
+    async setResetToken(req, res, next) {
+        try {
+            const resetLink = req.params.link;
+            const {link, resetToken} = await authService.resetLinkCheck(resetLink);
+            res.cookie('resetToken', resetToken, {maxAge: 60 * 60 * 1000, httpOnly: true});
+            return res.redirect(`${CLIENT_URL}/reset/${link}`);
+        } catch (e) {
+            next(e);
+        }
+    }
+    async checkResetLink(req, res, next) {
+        try {
+            const {resetLink} = req.body;
+            const resetToken = req.cookies.resetToken;
+            const isLinkValid = await authService.checkResetLink(resetLink, resetToken);
+            return res.json(isLinkValid);
+        } catch (e) {
+            next(e);
+        }
+    }
+    async resetPassword(req, res, next) {
+        try {
+            const {resetToken} = req.cookies;
+            const {password} = req.body;
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequest("Password is invalid.", errors.array()));
+            }
+            const resetMessage = await authService.resetPassword(resetToken, password);
+            res.clearCookie('resetToken');
+            res.json(resetMessage);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new AuthController();
