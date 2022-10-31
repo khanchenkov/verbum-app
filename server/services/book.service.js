@@ -44,19 +44,19 @@ class BookService {
             user_id: userId
         })
     }
+    async getUserBookLists(refreshToken) {
+        const userId = tokenService.validateRefreshToken(refreshToken).tokenPayload.id;
+        return pg("booklist").select("id", "booklist_name").where("user_id", userId);
+    }
     async addBookToBookList(bookId, bookListId) {
         await pg("booklist_book").insert({
             book_id: bookId,
             booklist_id: bookListId
         });
     }
-    async getUserBookLists(refreshToken) {
-        const userId = tokenService.validateRefreshToken(refreshToken).tokenPayload.id;
-        return pg("booklist").select("id", "booklist_name").where("user_id", userId);
-    }
     async getBookList(bookListId) {
         const books = await pg("booklist_book").select("*").where("id", bookListId);
-        console.log(books);
+        console.log(books); // TODO
     }
     async removeBookFromBookList(bookId, booklistId) {
         await("booklist_book").del().where({

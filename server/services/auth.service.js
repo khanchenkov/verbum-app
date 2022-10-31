@@ -10,7 +10,7 @@ class AuthService {
     async registration(email, password) {
         const [candidate] = await pg("user").select("id").where("email", email);
         if (candidate) {
-            throw ApiError.BadRequest("Пользователь с таким email уже существует.");
+            throw ApiError.BadRequest("Email is invalid or already taken.");
         }
         const hashPassword = await bcrypt.hash(password, 3);
         const link = uuid.v4();
@@ -41,7 +41,7 @@ class AuthService {
     async login(email, password) {
         const [user] = await pg("user").select("*").where("email", email);
         if (!user) {
-            throw ApiError.BadRequest("Email is invalid or already taken.");
+            throw ApiError.BadRequest("Email or password is incorrect.");
         }
         const isPasswordCorrect = await bcrypt.compare(password, user.user_password);
         if (!isPasswordCorrect) {

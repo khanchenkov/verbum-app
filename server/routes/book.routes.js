@@ -8,12 +8,14 @@ const router = new Router();
 router.post("/upload-book", authMiddleware, uploadBookMiddleware.single("book"), bookController.uploadBook);
 router.get("/user-books", authMiddleware, bookController.getUserBooks);
 router.delete("/remove-book/:id", authMiddleware, bookController.removeBook);
-router.put("/update-reading-data", authMiddleware, bookController.updateReadingData);
+router.put("/update-reading-data", authMiddleware, bookController.updateReadingData); // TODO
 
 router.post("/create-book-list", authMiddleware, bookController.createBookList);
 router.get("/user-book-lists", authMiddleware, bookController.getUserBookLists);
-router.post("/add-to-book-list", authMiddleware, bookController.addBookToBookList);
-router.get("/user-book-list", authMiddleware, bookController.getBookList);
-router.post("/remove-from-book-list/:id", authMiddleware, bookController.removeBookFromBookList);
+router.post("/add-book-to-list", authMiddleware, bookController.addBookToBookList);
+
+
+router.get("/get-book-list/:id", authMiddleware, bookController.getBookList);
+router.post("/remove-book-from-list/:id", authMiddleware, bookController.removeBookFromBookList);
 
 module.exports = router;

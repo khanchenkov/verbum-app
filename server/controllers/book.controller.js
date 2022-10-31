@@ -47,20 +47,20 @@ class BookController {
             next(e);
         }
     }
-    async getBookList(req, res, next) {
-        try {
-            const bookListId = req.params.id;
-            const bookList = await bookService.getBookList(bookListId);
-            return res.json(bookList);
-        } catch (e) {
-            next(e);
-        }
-    }
     async addBookToBookList(req, res, next) {
         try {
             const {bookId, bookListId} = req.body;
             await bookService.addBookToBookList(bookId, bookListId);
             return res.json({message: "Book was successfully added to book list."})
+        } catch (e) {
+            next(e);
+        }
+    }
+    async getBookList(req, res, next) {
+        try {
+            const bookListId = req.params.id;
+            const bookList = await bookService.getBookList(bookListId);
+            return res.json(bookList);
         } catch (e) {
             next(e);
         }
