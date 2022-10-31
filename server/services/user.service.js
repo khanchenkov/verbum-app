@@ -25,7 +25,7 @@ class UserService {
         await pg("user").update("avatar", file.path).where("id", id);
     }
     async updateReadingCounter(readingTime, userId) {
-        await pg("user").update("reading_time", readingTime).where("id", userId);
+        // await pg("user").update("reading_time", readingTime).where("id", userId);
     }
     async resetReadingCounter(refreshToken) {
         const id = tokenService.validateRefreshToken(refreshToken).tokenPayload.id;

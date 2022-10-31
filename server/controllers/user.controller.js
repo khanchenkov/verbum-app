@@ -30,6 +30,15 @@ class UserController {
             next(e);
         }
     }
+    async resetReadingCounter(req, res, next) {
+        try {
+            const {refreshToken} = req.cookies;
+            await userService.resetReadingCounter(refreshToken);
+            res.json({message: "Counter has been reset."});
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new UserController();

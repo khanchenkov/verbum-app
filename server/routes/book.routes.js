@@ -1,18 +1,19 @@
 const Router = require("express").Router;
 const authMiddleware = require("../middlewares/auth.middleware");
 const bookController = require("../controllers/book.controller");
-const uploadBookMiddleware = require('../middlewares/upload-book.middleware');
+const uploadBookMiddleware = require("../middlewares/upload-book.middleware");
 
 const router = new Router();
 
 router.post("/upload-book", authMiddleware, uploadBookMiddleware.single("book"), bookController.uploadBook);
 router.get("/user-books", authMiddleware, bookController.getUserBooks);
 router.delete("/remove-book/:id", authMiddleware, bookController.removeBook);
+router.put("/update-reading-data", authMiddleware, bookController.updateReadingData);
 
-router.get("/user-booklist", authMiddleware, bookController.getUserBookList);
-
-// router.post('/add-to-booklist', authMiddleware, bookController.addBookToBookList);
-// router.post('/remove-from-booklist', authMiddleware, bookController.removeFromBookList);
-// router.put('/update-reading-data', authMiddleware, bookController.updateReadingData);
+router.post("/create-book-list", authMiddleware, bookController.createBookList);
+router.get("/user-book-lists", authMiddleware, bookController.getUserBookLists);
+router.post("/add-to-book-list", authMiddleware, bookController.addBookToBookList);
+router.get("/user-book-list", authMiddleware, bookController.getBookList);
+router.post("/remove-from-book-list/:id", authMiddleware, bookController.removeBookFromBookList);
 
 module.exports = router;
