@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
-import image from "../assets/images/greeting-image.jpg";
 import {SignUpButton} from "../styles/UILibrary";
-import {redirect} from "react-router-dom";
+import {redirect, useNavigate} from "react-router-dom";
+import GreetingsImage from "../components/GreetingsImage";
 
 const HeroBlock = styled.div`
   display: flex;
@@ -37,18 +37,13 @@ const Description = styled.p`
     text-align: center;
   }
 `;
-const HeroImage = styled.img`
-    @media (max-width: 768px) {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-  border-radius: 5px;
-    width: calc(250px + (550 - 250) * ((100vw - 320px) / (1440 - 320)));
-    height: calc(210px + (380 - 210) * ((100vw - 320px) / (1440 - 320)));;
-    object-fit: cover;
-`;
 
 const GreetingsPage = () => {
+    // const navigate = useNavigate()
+    const redirectUser = (path: string) => {
+        return redirect(path)
+    }
+
     return (
         <HeroBlock>
             <HeadingGroup>
@@ -58,9 +53,9 @@ const GreetingsPage = () => {
                     Share your opinion with friends. <br/>
                     Discover something new every time.
                 </Description>
-                <SignUpButton onClick={() => redirect("/signup")}>Sign up</SignUpButton>
+                <SignUpButton onClick={() => redirectUser("/signup")}>Sign up</SignUpButton>
             </HeadingGroup>
-            <HeroImage src={image} alt="Read books with comfort"/>
+            <GreetingsImage/>
         </HeroBlock>
     );
 };

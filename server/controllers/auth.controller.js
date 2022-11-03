@@ -65,7 +65,7 @@ class AuthController {
             }
             const email = req.body.email;
             await authService.forgot(email);
-            return res.send({message: "Link was successfully sent."})
+            return res.send({message: "Link was successfully sent. Check spam folder also."})
         } catch (e) {
             next(e);
         }
@@ -73,7 +73,7 @@ class AuthController {
     async setResetToken(req, res, next) {
         try {
             const resetLink = req.params.link;
-            const {link, resetToken} = await authService.resetLinkCheck(resetLink);
+            const {link, resetToken} = await authService.checkResetLink(resetLink);
             res.cookie('resetToken', resetToken, {maxAge: 60 * 60 * 1000, httpOnly: true});
             return res.redirect(`${CLIENT_URL}/reset/${link}`);
         } catch (e) {
@@ -82,9 +82,9 @@ class AuthController {
     }
     async checkResetLink(req, res, next) {
         try {
-            const {resetLink} = req.body;
+            const resetLink = req.body.link;
             const resetToken = req.cookies.resetToken;
-            const isLinkValid = await authService.checkResetLink(resetLink, resetToken);
+            const isLinkValid = await authService.checkResetToken(resetLink, resetToken);
             return res.json(isLinkValid);
         } catch (e) {
             next(e);

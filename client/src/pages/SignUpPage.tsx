@@ -1,39 +1,41 @@
 import React, {useState, useEffect} from 'react';
 import {Divider, FormLabel, FormInput, FormSubmit, FormBlock, FormHeading, FormError} from "../styles/UILibrary";
-import Loading from "../components/Loading";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {useNavigate} from "react-router-dom";
+import {registerUser} from "../store/actions/AuthActionCreators";
 
 const SignUpPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
+    const [clientError, setClientError] = useState("");
 
-    useEffect(() => {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const {isAuth, error} = useAppSelector(state => state.auth);
 
-    }, []);
-
-
-    const isLoading = false;
-    const error = '';
-    const clientError = '';
+    // useEffect(() => {
+    //     dispatch(errorAction(null));
+    //     setClientError('');
+    // }, [location.pathname, dispatch]);
 
     const formHandler = async (e: any) => {
         e.preventDefault();
-            // if (password === password2) {
-            //     await dispatch(registerUser(email, password));
-            // } else {
-            //     setClientError('Passwords doesn\'t match.');
-            // }
+        if (password === password2) {
+            await dispatch(registerUser(email, password));
+        } else {
+            setClientError("Passwords doesn\'t match.");
+        }
         setEmail('');
         setPassword('');
         setPassword2('');
-        // if (isAuth) {
-        //     navigate('/stats');
-        // }
+        if (isAuth) {
+            navigate('/profile');
+        }
     }
 
     return (
         <FormBlock>
-            {isLoading && <Loading/>}
             <FormHeading>Sign Up</FormHeading>
             <Divider/>
             <form onSubmit={(e) => formHandler(e)}>

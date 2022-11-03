@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {ModalBg} from "../types/IStyled";
 
 export const colors = {
     lightMode: {
@@ -100,4 +101,44 @@ export const FormHeading = styled.h1`
   color: ${(props) => props.theme.text};
   text-align: center;
   font-size: 50px;
+`;
+export const modalBackground = styled.div<ModalBg>`
+  height: 100vh;
+  width: 100vw;
+  background-color: ${(props) => props.theme.loadingBg};
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  opacity: 0;
+  transition: .2s;
+  pointer-events: none;
+  z-index: 9999;
+  ${({ active }) => active && `
+    opacity: 1;
+    pointer-events: all;
+  `}
+`;
+export const SettingsElement = styled.li`
+  margin-bottom: 20px;
+`;
+export const SettingsButton = styled.button`
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: .1s;
+  span {
+    color: ${(props) => props.theme.secondary};
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  &:hover {
+    background: ${(props) => props.theme.border};
+  }
 `;

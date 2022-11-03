@@ -1,14 +1,13 @@
 export interface HeaderProps {
-    isAuth: boolean,
+    isAuth: boolean
     isReading?: boolean
 }
 export interface NavModalProps {
-    active: boolean,
-    setActive: any,
-    avatar: string,
+    active: boolean
+    setActive: any
+    avatar: string
     name: string
 }
-
 export interface PrivateRoutesProps {
     isAuth: boolean
 }

@@ -10,19 +10,20 @@ class MailService {
             auth: {
                 user: process.env.SMTP_EMAIL,
                 pass: process.env.SMTP_PASSWORD
-            }
+            },
+            from: process.env.SMTP_EMAIL
         })
     }
     async sendActivationMail(to, link, url) {
         await this.transporter.sendMail({
             from: process.env.SMTP_EMAIL,
             to,
-            subject: `Активация аккаунта на ${url}`,
+            subject: `Account activation ${url}`,
             text: "",
             html:
                 `
                 <div>
-                    <h1>Для активации перейдите по ссылке:</h1>
+                    <h1>To activate, click the link below:</h1>
                     <a href="${link}">${link}</a>
                 </div>
             `
@@ -32,12 +33,12 @@ class MailService {
         await this.transporter.sendMail({
             from: process.env.SMTP_EMAIL,
             to,
-            subject: `Восстановление доступа к аккаунту на ${url}`,
+            subject: `Restoring access to your account ${url}`,
             text: "",
             html:
                 `
                 <div>
-                    <h1>Для изменения пароля перейдите по ссылке:</h1>
+                    <h1>To reset your password, click the link below:</h1>
                     <a href="${link}">${link}</a>
                 </div>
             `

@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import styled from "styled-components";
 import {Container, SignUpButton} from "../styles/UILibrary";
-import {redirect, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import Logo from "./Logo";
 import NavModal from "./NavModal";
 import {HeaderProps} from "../types/IProps";
@@ -63,6 +63,10 @@ const Header: FC<HeaderProps> = ({isAuth}) => {
         document.body.style.overflow = 'hidden';
         setModalActive(true);
     };
+    const navigateUser = (path: string) => {
+        navigate(path);
+        window.location.reload();
+    }
 
     return (
         <HeaderBlock>
@@ -73,26 +77,26 @@ const Header: FC<HeaderProps> = ({isAuth}) => {
                     </div>
                     {
                         isAuth
-                            ?
-                            <>
-                                <div>
-                                    <ProfileImage
-                                        src={avatar}
-                                        onClick={showModal}
-                                    />
-                                </div>
-                                <NavModal
-                                    active={modalActive}
-                                    setActive={setModalActive}
-                                    avatar={avatar}
-                                    name={name}
+                        ?
+                        <>
+                            <div>
+                                <ProfileImage
+                                    src={avatar}
+                                    onClick={showModal}
                                 />
-                            </>
-                            :
-                            <LinksWrapper>
-                                <LogInButton onClick={() => navigate('/login')}>Log in</LogInButton>
-                                <SignUpButton onClick={() => navigate('/signup')}>Sign up</SignUpButton>
-                            </LinksWrapper>
+                            </div>
+                            <NavModal
+                                active={modalActive}
+                                setActive={setModalActive}
+                                avatar={avatar}
+                                name={name}
+                            />
+                        </>
+                        :
+                        <LinksWrapper>
+                            <LogInButton onClick={() => navigateUser('/login')}>Log in</LogInButton>
+                            <SignUpButton onClick={() => navigateUser('/signup')}>Sign up</SignUpButton>
+                        </LinksWrapper>
                     }
                 </HeaderGroup>
             </Container>

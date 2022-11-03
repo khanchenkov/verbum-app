@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosRequestConfig} from "axios";
 
 export const API_URL = `http://localhost:5000/api`;
 
@@ -7,8 +7,8 @@ const $api = axios.create({
     baseURL: API_URL,
 });
 
-$api.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+$api.interceptors.request.use((config: AxiosRequestConfig) => {
+    config.headers!.Authorization = `Bearer ${localStorage.getItem('token')}`;
     return config;
 });
 
@@ -23,7 +23,7 @@ $api.interceptors.response.use(config => {
             localStorage.setItem('token', res.data.accessToken);
             return $api.request(originalRequest);
         } catch (e) {
-            console.log("Не авторизованный запрос");
+            console.log("Unauthorized request.");
         }
     }
     throw error;
