@@ -99,7 +99,6 @@ class AuthController {
                 return next(ApiError.BadRequest("Password is invalid.", errors.array()));
             }
             const resetMessage = await authService.resetPassword(resetToken, password);
-            console.log(resetMessage);
             res.clearCookie('resetToken');
             res.json(resetMessage);
         } catch (e) {

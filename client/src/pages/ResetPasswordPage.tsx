@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import styled from "styled-components";
 import {FormHeading, Divider, FormLabel, FormInput, FormError, FormSubmit} from "../styles/UILibrary";
 import {useParams, useNavigate} from "react-router-dom";
 import AuthService from "../services/AuthService";
-import {checkResetLink, forgot} from "../store/actions/AuthActionCreators";
+import {checkResetLink} from "../store/actions/AuthActionCreators";
 import {useAppDispatch} from "../hooks/redux";
 
 const ResetPageBlock = styled.div`
@@ -25,18 +25,19 @@ const ResetPasswordPage = () => {
     const dispatch = useAppDispatch();
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
-
     const [errorText, setErrorText] = useState('');
     const [clientError, setClientError] = useState('');
     const [isSucceed, setIsSucceed] = useState(false);
 
-    const checkLink = async (link: string | undefined) => dispatch(checkResetLink(link));
+    const checkLink = useCallback(async (link: string | undefined) => {
+        return dispatch(checkResetLink(link))
+    }, [dispatch]);
 
     useEffect(() => {
         checkLink(link)
             .then((res) => !res!.data && navigate("/login"))
             .catch((err) => {setErrorText(err.response.data.message)});
-    }, [link]);
+    }, [link, navigate, checkLink]);
 
     const resetPassword = async (e: any) => {
         e.preventDefault();
@@ -48,6 +49,7 @@ const ResetPasswordPage = () => {
                     setIsSucceed(true);
                         setTimeout(() => {
                             navigate('/login');
+                            window.location.reload()
                         }, 3000);
                 }
             }

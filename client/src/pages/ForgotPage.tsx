@@ -27,12 +27,12 @@ const ForgotPage = () => {
     const sendResetLink = async (e: any) => {
         e.preventDefault();
         const response = await dispatch(forgot(email));
-        console.log(response)
         setEmail('');
         if (response!.status === 200) {
             setIsLinkSent(response!.data.message);
                 setTimeout(() => {
                     navigate('/');
+                    window.location.reload();
                 }, 5000);
         }
     }
