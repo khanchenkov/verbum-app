@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import {SignUpButton} from "../styles/UILibrary";
-import {redirect, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import GreetingsImage from "../components/GreetingsImage";
 
 const HeroBlock = styled.div`
@@ -39,10 +39,7 @@ const Description = styled.p`
 `;
 
 const GreetingsPage = () => {
-    // const navigate = useNavigate()
-    const redirectUser = (path: string) => {
-        return redirect(path)
-    }
+    const navigate = useNavigate()
 
     return (
         <HeroBlock>
@@ -53,7 +50,7 @@ const GreetingsPage = () => {
                     Share your opinion with friends. <br/>
                     Discover something new every time.
                 </Description>
-                <SignUpButton onClick={() => redirectUser("/signup")}>Sign up</SignUpButton>
+                <SignUpButton onClick={() => navigate("/signup")}>Sign up</SignUpButton>
             </HeadingGroup>
             <GreetingsImage/>
         </HeroBlock>

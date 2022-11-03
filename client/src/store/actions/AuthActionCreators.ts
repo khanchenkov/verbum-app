@@ -17,6 +17,7 @@ export const loginUser = (email: string, password: string) => async (dispatch: A
     try {
         dispatch(authSlice.actions.authFetching());
         const response = await AuthService.login(email, password);
+        console.log(response)
         localStorage.setItem("token", response.data.accessToken);
         dispatch(authSlice.actions.authFetchingSuccess(response.status === 200));
     } catch (e: any) {
@@ -65,4 +66,3 @@ export const checkResetLink = (link: string | undefined) => async (dispatch: App
         dispatch(authSlice.actions.authFetchingError(e.response?.data?.message));
     }
 }
-

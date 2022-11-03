@@ -20,16 +20,16 @@ const TextInfo = styled.p`
 const ForgotPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [isLinkSent, setIsLinkSent] = useState("");
+    const [email, setEmail] = useState<string>("");
+    const [linkSentMessage, setLinkSentMessage] = useState<string>("");
     const {error} = useAppSelector(state => state.auth);
 
     const sendResetLink = async (e: any) => {
         e.preventDefault();
         const response = await dispatch(forgot(email));
-        setEmail('');
+        setEmail("");
         if (response!.status === 200) {
-            setIsLinkSent(response!.data.message);
+            setLinkSentMessage(response!.data.message);
                 setTimeout(() => {
                     navigate('/');
                     window.location.reload();
@@ -44,7 +44,7 @@ const ForgotPage = () => {
                 {error ? <FormError>{error}</FormError> : <TextInfo>We'll send you a reset link on your email.</TextInfo>}
                 <Divider/>
                 {
-                    !isLinkSent
+                    !linkSentMessage
                     ?
                     <>
                         <FormInput
@@ -57,7 +57,7 @@ const ForgotPage = () => {
                         />
                         <FormSubmit type="submit">Send reset link</FormSubmit>
                     </>
-                    : <TextInfo>{isLinkSent}</TextInfo>
+                    : <TextInfo>{linkSentMessage}</TextInfo>
                 }
             </ForgotForm>
         </ForgotPageBlock>

@@ -53,7 +53,7 @@ const LogInButton = styled.button`
 `;
 
 const Header: FC<HeaderProps> = ({isAuth}) => {
-    const [modalActive, setModalActive] = useState(false);
+    const [modalActive, setModalActive] = useState<boolean>(false);
     const navigate = useNavigate();
     const avatar = '';
     const name = 'Daniil'

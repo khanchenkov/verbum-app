@@ -52,7 +52,7 @@ class AuthService {
         return tokenService.saveGeneratedTokens(user);
     }
     async logout(refreshToken) {
-        return tokenService.removeToken(refreshToken);
+        await tokenService.removeToken(refreshToken);
     }
     async refresh(refreshToken) {
         if (!refreshToken) {

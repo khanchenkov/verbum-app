@@ -10,7 +10,7 @@ export const colors = {
         darkSecondary: "#bd9845",
         text: "#1E1E1E",
         form: "#F7F7F4",
-        loadingBg: "rgba(239, 238, 228, 0.5)"
+        loadingBg: "rgba(0, 0, 0, 0.2)"
     },
     darkMode: {
         main: "#1E1E1E",
@@ -20,7 +20,7 @@ export const colors = {
         darkSecondary: "#bd9845",
         text: "#FFFFFF",
         form: "#08080b",
-        loadingBg: "rgba(16, 17, 27, 0.5)"
+        loadingBg: "rgba(0, 0, 0, 0.2)"
     }
 };
 

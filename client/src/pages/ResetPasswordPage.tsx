@@ -23,11 +23,11 @@ const ResetPasswordPage = () => {
     const {link} = useParams();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const [password, setPassword] = useState('');
-    const [password2, setPassword2] = useState('');
-    const [errorText, setErrorText] = useState('');
-    const [clientError, setClientError] = useState('');
-    const [isSucceed, setIsSucceed] = useState(false);
+    const [password, setPassword] = useState<string>('');
+    const [password2, setPassword2] = useState<string>('');
+    const [errorText, setErrorText] = useState<string>('');
+    const [clientError, setClientError] = useState<string>('');
+    const [isSucceed, setIsSucceed] = useState<boolean>(false);
 
     const checkLink = useCallback(async (link: string | undefined) => {
         return dispatch(checkResetLink(link))

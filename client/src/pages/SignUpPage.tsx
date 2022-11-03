@@ -5,19 +5,14 @@ import {useNavigate} from "react-router-dom";
 import {registerUser} from "../store/actions/AuthActionCreators";
 
 const SignUpPage = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [password2, setPassword2] = useState("");
-    const [clientError, setClientError] = useState("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [password2, setPassword2] = useState<string>("");
+    const [clientError, setClientError] = useState<string>("");
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const {isAuth, error} = useAppSelector(state => state.auth);
-
-    // useEffect(() => {
-    //     dispatch(errorAction(null));
-    //     setClientError('');
-    // }, [location.pathname, dispatch]);
 
     const formHandler = async (e: any) => {
         e.preventDefault();

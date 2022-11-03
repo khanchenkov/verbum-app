@@ -1,13 +1,8 @@
 import React from 'react';
-import styled from "styled-components";
-
-const Svg = styled.svg`
-  cursor: pointer;
-`;
 
 const Logo = () => {
     return (
-        <Svg width="102" height="30" viewBox="0 0 102 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="102" height="30" viewBox="0 0 102 30" fill="none" xmlns="http://www.w3.org/2000/svg" style={{cursor: "pointer"}}>
             <g clipPath="url(#clip0_210_2)">
                 <path d="M22.5811 0H7.41886C3.32154 0 0 3.32154 0 7.41886V22.5811C0 26.6785 3.32154 30 7.41886 30H22.5811C26.6785 30 30 26.6785 30 22.5811V7.41886C30 3.32154 26.6785 0 22.5811 0Z"
                       fill="#E5E4DC"/>
@@ -21,7 +16,7 @@ const Logo = () => {
                     <rect width="30" height="30" fill="white"/>
                 </clipPath>
             </defs>
-        </Svg>
+        </svg>
     );
 };
 
