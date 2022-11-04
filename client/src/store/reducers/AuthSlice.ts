@@ -2,6 +2,7 @@ import {AuthState} from "../../types/IState";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState = <AuthState>{
+    isDarkMode: false,
     isLoading: false,
     isAuth: false,
     error: ""
@@ -18,6 +19,7 @@ export const authSlice = createSlice({
         authLogout(state) {
             state.isLoading = false;
             state.isAuth = false;
+            state.error = "";
         },
         authSuccess(state) {
             state.isLoading = false;
@@ -31,6 +33,9 @@ export const authSlice = createSlice({
         authFetchingError(state, action: PayloadAction<string>) {
             state.isLoading = false;
             state.error = action.payload;
+        },
+        toggleDarkMode(state) {
+            state.isDarkMode = !state.isDarkMode;
         },
         clearAuthErrors(state) {
             state.error = "";

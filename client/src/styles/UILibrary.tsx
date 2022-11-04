@@ -26,7 +26,7 @@ export const colors = {
 
 export const Container = styled.div`
   margin: 0 auto;
-  width: calc(300px + (1140 - 300) * ((100vw - 320px) / (1440 - 320)));
+  width: calc(280px + (1140 - 280) * ((100vw - 280px) / (1440 - 280)));
 `;
 export const SignUpButton = styled.button`
   display: block;

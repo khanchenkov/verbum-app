@@ -2,7 +2,6 @@ import {UserState} from "../../types/IState";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState: UserState = {
-    isDarkMode: false,
     currentBook: {},
     userInfo: {},
     userLibrary: [],
@@ -14,9 +13,6 @@ export const userSlice = createSlice({
     initialState,
     name: "user",
     reducers: {
-        toggleTheme(state) {
-            state.isDarkMode = !state.isDarkMode
-        }
         // toggleTheme(state, action: PayloadAction<boolean>) {
         //     state.isDarkMode = action.payload
         // }

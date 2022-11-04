@@ -9,7 +9,7 @@ import {authSlice} from "./store/reducers/AuthSlice";
 
 const App = () => {
     const dispatch = useAppDispatch();
-    const isDarkMode = useAppSelector(state => state.user.isDarkMode);
+    const isDarkMode = useAppSelector(state => state.auth.isDarkMode);
 
     useEffect(() => {
         if (localStorage.getItem('token')) {
