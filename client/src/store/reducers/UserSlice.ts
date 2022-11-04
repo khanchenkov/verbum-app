@@ -1,5 +1,5 @@
 import {UserState} from "../../types/IState";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 
 const initialState: UserState = {
     currentBook: {},

@@ -1,12 +1,12 @@
 import {AuthState} from "../../types/IState";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-const initialState = <AuthState>{
+const initialState = {
     isDarkMode: false,
     isLoading: false,
     isAuth: false,
     error: ""
-};
+} as AuthState;
 
 export const authSlice = createSlice({
     initialState: initialState,
