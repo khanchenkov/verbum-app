@@ -11,3 +11,6 @@ export interface NavModalProps {
 export interface PrivateRoutesProps {
     isAuth: boolean
 }
+export interface DarkModeButtonProps {
+    onClick: () => void
+}
