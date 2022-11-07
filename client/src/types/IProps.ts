@@ -28,3 +28,10 @@ export interface UserImageProps {
     src: (string & ArrayBuffer) | string | null | undefined
     alt: string
 }
+export interface UploadBookPanelProps {
+    booksNum: number
+}
+export interface UploadBookModalProps {
+    active: boolean
+    setActive: any
+}
