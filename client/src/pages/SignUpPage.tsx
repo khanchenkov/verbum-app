@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from "react";
 import {Divider, FormLabel, FormInput, FormSubmit, FormBlock, FormHeading, FormError} from "../styles/UILibrary";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {useNavigate} from "react-router-dom";
@@ -19,13 +19,13 @@ const SignUpPage = () => {
         if (password === password2) {
             await dispatch(registerUser(email, password));
         } else {
-            setClientError("Passwords doesn\'t match.");
+            setClientError("Passwords doesn't match.");
         }
-        setEmail('');
-        setPassword('');
-        setPassword2('');
+        setEmail("");
+        setPassword("");
+        setPassword2("");
         if (isAuth) {
-            navigate('/profile');
+            navigate("/profile");
         }
     }
 

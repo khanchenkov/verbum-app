@@ -23,10 +23,10 @@ const ResetPasswordPage = () => {
     const {link} = useParams();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const [password, setPassword] = useState<string>('');
-    const [password2, setPassword2] = useState<string>('');
-    const [errorText, setErrorText] = useState<string>('');
-    const [clientError, setClientError] = useState<string>('');
+    const [password, setPassword] = useState<string>("");
+    const [password2, setPassword2] = useState<string>("");
+    const [errorText, setErrorText] = useState<string>("");
+    const [clientError, setClientError] = useState<string>("");
     const [isSucceed, setIsSucceed] = useState<boolean>(false);
 
     const checkLink = useCallback(async (link: string | undefined) => {
@@ -41,20 +41,20 @@ const ResetPasswordPage = () => {
 
     const resetPassword = async (e: any) => {
         e.preventDefault();
-        if (password === password2 && password !== '' && password.length >= 3) {
+        if (password === password2 && password !== "" && password.length >= 3) {
             const res = await checkLink(link);
             if (res!.data) {
                 const res = await AuthService.reset(password);
                 if (res.status === 200) {
                     setIsSucceed(true);
                         setTimeout(() => {
-                            navigate('/login');
+                            navigate("/login");
                             window.location.reload()
                         }, 3000);
                 }
             }
         } else {
-            setClientError('Passwords doesn\'t match.');
+            setClientError("Passwords doesn't match.");
         }
     }
 

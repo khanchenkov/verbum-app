@@ -24,4 +24,7 @@ export default class AuthService {
     static async reset(password: string) {
         return axios.post<AuthRequestMessage>(`${API_URL}/auth/reset-password`, {password}, {withCredentials: true});
     }
+    static async sendActivationLink() {
+        return axios.get<AuthRequestMessage>(`${API_URL}/auth/send-activation-link`, {withCredentials: true});
+    }
 }

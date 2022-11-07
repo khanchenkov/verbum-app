@@ -5,7 +5,7 @@ const tokenService = require('../services/token.service');
 const storage = multer.diskStorage({
     destination(req, file, cb) {
         const userId = tokenService.validateRefreshToken(req.cookies.refreshToken).tokenPayload.id;
-        const directory = `/data/user${userId}`;
+        const directory = `data/user${userId}`;
         if (!fs.existsSync(directory)) {
             fs.mkdirSync(directory, { recursive: true })
         }

@@ -18,6 +18,16 @@ class AuthController {
             next(e);
         }
     }
+    async sendActivationLink(req, res, next) {
+        try {
+            const {refreshToken} = req.cookies;
+            console.log(refreshToken)
+            await authService.sendActivationLink(refreshToken);
+            return res.json({message: "Link was successfully sent."});
+        } catch (e) {
+            next(e);
+        }
+    }
     async activate(req, res, next) {
         try {
             const activationLink = req.params.link;

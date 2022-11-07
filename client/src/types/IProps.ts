@@ -5,12 +5,26 @@ export interface HeaderProps {
 export interface NavModalProps {
     active: boolean
     setActive: any
-    avatar: string
-    name: string
+    avatar: string | undefined
+    name: string | undefined
 }
 export interface PrivateRoutesProps {
     isAuth: boolean
 }
 export interface DarkModeButtonProps {
     onClick: () => void
+}
+export interface UserInfoProps {
+    name: string | undefined
+    avatar: string | undefined
+    status: string | undefined
+}
+export interface ReadingInfoProps {
+    daily_goal: number | undefined
+    days_reading: number | undefined
+    reading_time: number | undefined
+}
+export interface UserImageProps {
+    src: (string & ArrayBuffer) | string | null | undefined
+    alt: string
 }

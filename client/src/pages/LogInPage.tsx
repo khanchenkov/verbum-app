@@ -1,18 +1,18 @@
-import React, {useState} from 'react';
+import React, {useState} from "react";
 import styled from "styled-components";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {FormBlock, FormHeading, Divider, FormSubmit, FormLabel, FormInput, FormError} from "../styles/UILibrary";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {loginUser} from "../store/actions/AuthActionCreators";
 
-const ForgotLink = styled(Link)`
-  color: ${(props) => props.theme.secondary} !important;
+const ForgotLink = styled.a`
+  color: ${(props) => props.theme.secondary};
   text-decoration: underline;
   display: block;
   text-align: center;
   cursor: pointer;
   &:hover{
-    color: ${(props) => props.theme.darkSecondary} !important;
+    color: ${(props) => props.theme.darkSecondary};
   }
 `;
 
@@ -27,11 +27,15 @@ const LogInPage = () => {
     const formHandler = async (e: any) => {
         e.preventDefault();
         await dispatch(loginUser(email, password));
-        setEmail('');
-        setPassword('');
+        setEmail("");
+        setPassword("");
         if (isAuth) {
-            navigate('/profile');
+            navigate("/profile");
         }
+    }
+    const navigateUser = (path: string) => {
+        navigate(path);
+        window.location.reload();
     }
 
     return (
@@ -60,7 +64,7 @@ const LogInPage = () => {
                     onChange={e => setPassword(e.target.value)}
                 />
                 <FormSubmit type="submit">Continue</FormSubmit>
-                <ForgotLink to="/forgot">Forgot password?</ForgotLink>
+                <ForgotLink onClick={() => navigateUser("/forgot")}>Forgot password?</ForgotLink>
             </form>
         </FormBlock>
     );

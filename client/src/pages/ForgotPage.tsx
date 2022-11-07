@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState} from "react";
 import styled from "styled-components";
 import {FormHeading, FormInput, FormSubmit, Divider, FormError} from "../styles/UILibrary";
 import {forgot} from "../store/actions/AuthActionCreators";
@@ -31,7 +31,7 @@ const ForgotPage = () => {
         if (response!.status === 200) {
             setLinkSentMessage(response!.data.message);
                 setTimeout(() => {
-                    navigate('/');
+                    navigate("/");
                     window.location.reload();
                 }, 5000);
         }
@@ -44,8 +44,7 @@ const ForgotPage = () => {
                 {error ? <FormError>{error}</FormError> : <TextInfo>We'll send you a reset link on your email.</TextInfo>}
                 <Divider/>
                 {
-                    !linkSentMessage
-                    ?
+                    !linkSentMessage ?
                     <>
                         <FormInput
                             required
@@ -57,7 +56,8 @@ const ForgotPage = () => {
                         />
                         <FormSubmit type="submit">Send reset link</FormSubmit>
                     </>
-                    : <TextInfo>{linkSentMessage}</TextInfo>
+                    :
+                    <TextInfo>{linkSentMessage}</TextInfo>
                 }
             </ForgotForm>
         </ForgotPageBlock>

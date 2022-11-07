@@ -7,6 +7,7 @@ const router = new Router();
 router.post("/registration",
     body("email").isEmail(), body("password").isLength({min: 3, max: 32}),
     authController.registration);
+router.get("/send-activation-link", authController.sendActivationLink);
 router.get("/activate/:link", authController.activate);
 router.post("/login", authController.login);
 router.post("/logout", authController.logout);

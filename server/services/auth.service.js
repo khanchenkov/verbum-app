@@ -32,6 +32,12 @@ class AuthService {
         await mailService.sendActivationMail(email, `${API_URL}/api/auth/activate/${link}`, API_URL);
         return tokenService.saveGeneratedTokens(user);
     }
+    async sendActivationLink(refreshToken) {
+        const email = tokenService.validateRefreshToken(refreshToken).tokenPayload.email;
+        const link = uuid.v4();
+        await pg("user").update({activation_link: link}).where("email", email);
+        await mailService.sendActivationMail(email, `${API_URL}/api/auth/activate/${link}`, API_URL);
+    }
     async activate(link) {
         const [userData] = await pg("user").select("activation_link", "id").where("activation_link", link);
         if (!userData.activation_link || !uuid.validate(userData.activation_link)) {

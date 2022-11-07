@@ -14,8 +14,18 @@ class UserController {
         try {
             const {refreshToken} = req.cookies;
             const {name, status, goal} = req.body;
-            await userService.updateUserData(name, status, goal, refreshToken);
-            return res.json({message: "Data successfully updated."});
+            const updUserData = await userService.updateUserData(name, status, goal, refreshToken);
+            return res.json(updUserData);
+        } catch (e) {
+            next(e);
+        }
+    }
+    async updateReadingDate(req, res, next) {
+        try {
+            const {refreshToken} = req.cookies;
+            const {currentDate} = req.body;
+            await userService.updateReadingDate(refreshToken, currentDate);
+            res.json({message: "Date and reading time was successfully updated."})
         } catch (e) {
             next(e);
         }
@@ -26,15 +36,6 @@ class UserController {
             const image = req.file;
             await userService.updateUserImage(image, refreshToken);
             return res.json({message: "Image successfully updated."});
-        } catch (e) {
-            next(e);
-        }
-    }
-    async resetReadingCounter(req, res, next) {
-        try {
-            const {refreshToken} = req.cookies;
-            await userService.resetReadingCounter(refreshToken);
-            res.json({message: "Counter has been reset."});
         } catch (e) {
             next(e);
         }

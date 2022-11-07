@@ -6,6 +6,7 @@ import {ThemeProvider} from "styled-components";
 import {useAppDispatch, useAppSelector} from "./hooks/redux";
 import {refresh} from "./store/actions/AuthActionCreators";
 import {authSlice} from "./store/reducers/AuthSlice";
+import {getUserInfo} from "./store/actions/UserActionCreators";
 
 const App = () => {
     const dispatch = useAppDispatch();

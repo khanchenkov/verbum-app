@@ -7,7 +7,7 @@ const router = new Router();
 
 router.get("/user-profile", authMiddleware, userController.getUserProfile);
 router.put("/update-userdata", authMiddleware, userController.updateUserData);
-router.put("/reset-reading-counter", authMiddleware, userController.resetReadingCounter);
 router.put("/update-user-image", authMiddleware, uploadImageMiddleware.single("avatar"), userController.updateUserImage);
+router.put("/update-reading-date", authMiddleware, userController.updateReadingDate);
 
 module.exports = router;

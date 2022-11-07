@@ -15,18 +15,18 @@ import LogInPage from "./LogInPage";
 import ResetPasswordPage from "./ResetPasswordPage";
 import ForgotPage from "./ForgotPage";
 import ProfilePage from "./ProfilePage";
+import SettingsPage from "./SettingsPage";
 import {useAppSelector} from "../hooks/redux";
 import Loading from "../components/Loading";
 
 const Pages = () => {
-
-    const {isAuth, isLoading} = useAppSelector(state => state.auth);
-    // const {isLoading: userDataLoading} = useSelector(state => state.user);
-    // const anyDataLoading = authLoading || userDataLoading;
+    const {isAuth, isLoading: isLoadingAuth} = useAppSelector(state => state.auth);
+    const isLoadingUser = useAppSelector(state => state.user.isLoading);
+    const anyDataLoading = isLoadingUser || isLoadingAuth;
 
     return (
         <Router>
-            {isLoading && <Loading/>}
+            {anyDataLoading && <Loading/>}
             <Header isAuth={isAuth}/>
             <Container>
                 <Routes>
@@ -42,7 +42,7 @@ const Pages = () => {
                     }
                     <Route element={<PrivateRoutes isAuth={isAuth}/>}>
                         <Route path="/profile" element={<ProfilePage/>}/>
-                        {/*<Route path="/settings" element={<SettingsPage />}/>*/}
+                        <Route path="/settings" element={<SettingsPage />}/>
                         {/*<Route path="/library" element={<LibraryPage />}/>*/}
                         {/*<Route path="/reader" element={<BookReader/>} />*/}
                         <Route path="*" element={<Navigate to="/profile" replace/>}/>
