@@ -24,7 +24,8 @@ import Loading from "../components/Loading";
 const Pages = () => {
     const {isAuth, isLoading: isLoadingAuth} = useAppSelector(state => state.auth);
     const isLoadingUser = useAppSelector(state => state.user.isLoading);
-    const anyDataLoading = isLoadingUser || isLoadingAuth;
+    const isLoadingBook = useAppSelector(state => state.book.isLoading);
+    const anyDataLoading = isLoadingUser || isLoadingAuth || isLoadingBook;
 
     return (
         <Router>

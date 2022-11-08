@@ -8,7 +8,8 @@ const router = new Router();
 router.post("/upload-book", authMiddleware, uploadBookMiddleware.single("book"), bookController.uploadBook);
 router.get("/user-books", authMiddleware, bookController.getUserBooks);
 router.delete("/remove-book/:id", authMiddleware, bookController.removeBook);
-router.put("/update-reading-data", authMiddleware, bookController.updateReadingData); // TODO
+
+router.put("/update-reading-data", authMiddleware, bookController.updateReadingData);
 
 router.post("/create-book-list", authMiddleware, bookController.createBookList);
 router.get("/user-book-lists", authMiddleware, bookController.getUserBookLists);

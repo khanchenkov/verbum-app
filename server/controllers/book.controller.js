@@ -5,8 +5,8 @@ class BookController {
         try {
             const bookFile = req.file;
             const {refreshToken} = req.cookies;
-            await bookService.uploadBook(bookFile, refreshToken)
-            res.json({message: "Book has been successfully uploaded."});
+            const response = await bookService.uploadBook(bookFile, refreshToken)
+            res.json(response);
         } catch (e) {
             next(e);
         }

@@ -2,7 +2,6 @@ const fs = require("fs");
 const pg = require("../database/database");
 const ApiError = require("../exceptions/api.error");
 const tokenService = require("./token.service");
-const userService = require("../services/user.service");
 const bookFileService = require("./book-file.service");
 const iconv = require("iconv-lite");
 
@@ -12,15 +11,29 @@ class BookService {
         if (!file || Object.keys(file).length === 0) {
             throw ApiError.BadRequest("File wasn't added.");
         }
-        const {pages, title, author} = await bookFileService.getMetaData(file);
+        const {pages, title, author} = await bookFileService.getPdfMetaData(file);
+        const bookTitle = title ? title.trim() : iconv.decode(file.originalname, "UTF-8").replace(/\.\w{1,4}$/, "");
+        const bookAuthor = author ? author.trim() : "Unknown author";
+        const [candidate] = await pg("book")
+            .select("*")
+            .where({title: bookTitle, author: bookAuthor, pages: pages, user_id: userId});
+        if (candidate) {
+            throw ApiError.BadRequest("File was already added.");
+        }
+        const thumbnail_path = await bookFileService.getPdfThumbnail(file.path, file.filename, userId);
         const newBook = {
-            title: title ? title.trim() : iconv.decode(file.originalname, "UTF-8").replace(/\.\w{1,4}$/, ""),
-            author: author ? author.trim() : "Unknown author",
-            path: file.path,
+            title: bookTitle,
+            author: bookAuthor,
+            book_path: file.path,
+            thumbnail_path: thumbnail_path,
             pages: pages,
+            is_read: false,
+            is_reading: false,
+            current_page: 0,
             user_id: userId
         };
-        await pg("book").insert(newBook);
+        await pg("book").insert(newBook).returning("*");
+        return {message: "File was successfully uploaded."};
     }
     async getUserBooks(refreshToken) {
         const userId = tokenService.validateRefreshToken(refreshToken).tokenPayload.id;

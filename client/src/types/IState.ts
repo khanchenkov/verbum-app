@@ -20,10 +20,21 @@ export interface UserState {
     isLoading: boolean
     error: string
 }
-// export interface Book {}
-// export interface BookState {
-//     currentBook: Book
-//     userLibrary: Book[]
-//     isLoading: boolean
-//     error: string
-// }
+export interface BookState {
+    library: Book[]
+    currentBook: Book
+    isLoading: boolean
+    error: string
+}
+export interface Book {
+    id?: number
+    title?: string
+    author?: string
+    book_path?: string
+    thumbnail_path?: string
+    pages?: number
+    current_page?: number
+    is_reading?: boolean
+    is_read?: boolean
+    user_id?: number
+}

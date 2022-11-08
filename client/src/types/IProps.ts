@@ -18,6 +18,8 @@ export interface UserInfoProps {
     name: string | undefined
     avatar: string | undefined
     status: string | undefined
+    booksReading: number
+    booksRead: number
 }
 export interface ReadingInfoProps {
     daily_goal: number | undefined

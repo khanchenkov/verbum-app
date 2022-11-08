@@ -21,8 +21,8 @@ const ModalContent = styled.div`
 const UserImage = styled.img`
   display: block;
   border-radius: 100%;
-  height: 60px;
-  width: 60px;
+  height: 80px;
+  width: 80px;
   margin: 0 auto;
 `;
 const UserName = styled.p`

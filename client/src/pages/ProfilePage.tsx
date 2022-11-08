@@ -24,6 +24,8 @@ const UserPanel = styled.div`
 
 const ProfilePage = () => {
     const {avatar, user_name, status, daily_goal, days_reading, reading_time} = useAppSelector(state => state.user.userInfo);
+    const books = useAppSelector(state => state.book.library)
+
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -37,6 +39,8 @@ const ProfilePage = () => {
                     avatar={avatar}
                     name={user_name}
                     status={status}
+                    booksReading={books.filter(el => el.is_reading).length}
+                    booksRead={books.filter(el => el.is_read).length}
                 />
                 <ReadingInfo
                     daily_goal={daily_goal}

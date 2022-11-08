@@ -52,7 +52,7 @@ const UserStats = styled.div`
   }
 `;
 
-const UserInfo: FC<UserInfoProps> = ({avatar, name, status}) => {
+const UserInfo: FC<UserInfoProps> = ({avatar, name, status, booksReading, booksRead}) => {
     return (
         <UserInfoBlock>
             <UserImage src={avatar}/>
@@ -61,15 +61,15 @@ const UserInfo: FC<UserInfoProps> = ({avatar, name, status}) => {
                 <UserStatus>{status}</UserStatus>
                 <UserStats>
                     <div>
-                        <p>3</p>
+                        <p>{booksReading}</p>
                         <p>Reading</p>
                     </div>
                     <div>
-                        <p>11</p>
+                        <p>{booksRead}</p>
                         <p>Read</p>
                     </div>
                     <div>
-                        <p>22</p>
+                        <p>?</p>
                         <p>Want to read</p>
                     </div>
                 </UserStats>

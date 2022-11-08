@@ -11,6 +11,7 @@ const LoadingBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10000;
 `;
 const rotate = keyframes`
   from {

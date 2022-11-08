@@ -20,12 +20,12 @@ export const userSlice = createSlice({
             state.userInfo = action.payload;
             state.error = "";
         },
-        resetReadingTime(state) {
-            state.userInfo.reading_time = 0;
-        },
         fetchingUserError(state, action: PayloadAction<string>) {
             state.isLoading = false;
             state.error = action.payload;
+        },
+        resetReadingTime(state) {
+            state.userInfo.reading_time = 0;
         }
     }
 });

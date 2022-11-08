@@ -2,6 +2,8 @@ import {AppDispatch} from "../store";
 import AuthService from "../../services/AuthService";
 import {authSlice} from "../reducers/AuthSlice";
 import {persistor} from "../store";
+import {userSlice} from "../reducers/UserSlice";
+import {bookSlice} from "../reducers/BookSlice";
 
 export const registerUser = (email: string, password: string) => async (dispatch: AppDispatch) => {
     try {
