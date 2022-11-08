@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from "react";
 import styled, {keyframes} from "styled-components";
 import {Book} from "../types/IState";
+import BookSettingsModal from "./BookSettingsModal";
 
 const LibraryBookBlock = styled.div`
   position: relative;
@@ -56,7 +57,7 @@ const AuthorName = styled.span`
   color: ${(props) => props.theme.bookInfo};
   @media (max-width: 575px) {
     font-size: 10px;
-    margin-bottom: 0;
+    margin-bottom: 10px;
   }
 `;
 const BookSettingsBlock = styled.div`
@@ -84,7 +85,7 @@ const BookButton = styled.button`
   }
 `;
 
-const LibraryBook = ({book_path, title, author, is_read, is_reading, current_page, pages, thumbnail_path}: Book) => {
+const LibraryBook = ({book_path, title, author, is_read, is_reading, current_page, pages, thumbnail_path, id}: Book) => {
     const [modalActive, setModalActive] = useState(false);
 
     const shortenName = (str: any) => str.length > 55 ? str.slice(0, 55) + '...' : str.slice(0, 55);
@@ -123,12 +124,12 @@ const LibraryBook = ({book_path, title, author, is_read, is_reading, current_pag
                             <ellipse cx="27.1722" cy="7.78449" rx="1.80115" ry="1.85345" fill="#64645D"/>
                         </svg>
                     </BookButton>
-            {/*        <BookSettingsModal*/}
-            {/*            active={modalActive}*/}
-            {/*            setActive={setModalActive}*/}
-            {/*            bookId={id}*/}
-            {/*            bookPath={path}*/}
-            {/*        />*/}
+                    <BookSettingsModal
+                        active={modalActive}
+                        setActive={setModalActive}
+                        bookId={id}
+                        bookPath={book_path}
+                    />
                 </BookSettingsBlock>
             </BookData>
         </LibraryBookBlock>

@@ -2,6 +2,7 @@
 **/.env
 *.log
 my_notes.txt
+./server/data/
 
 **/logs
 npm-debug.log*
