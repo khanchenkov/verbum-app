@@ -1,7 +1,10 @@
-import React, {useState, useRef, useEffect} from "react";
-import styled, {keyframes} from "styled-components";
+import React, {useState} from "react";
+import styled from "styled-components";
 import {Book} from "../types/IState";
 import BookSettingsModal from "./BookSettingsModal";
+import {useNavigate} from "react-router-dom";
+import {useAppDispatch} from "../hooks/redux";
+import {bookSlice} from "../store/reducers/BookSlice";
 
 const LibraryBookBlock = styled.div`
   position: relative;
@@ -86,13 +89,14 @@ const BookButton = styled.button`
 `;
 
 const LibraryBook = ({book_path, title, author, is_read, is_reading, current_page, pages, thumbnail_path, id}: Book) => {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const [modalActive, setModalActive] = useState(false);
 
     const shortenName = (str: any) => str.length > 55 ? str.slice(0, 55) + '...' : str.slice(0, 55);
     const openBook = () => {
-        // dispatch(setCurrentBookAction(id));
-        // navigate(`/reader`);
-        console.log(book_path)
+        dispatch(bookSlice.actions.setCurrentBook(id));
+        navigate("/reader");
     };
     const calculatePercent = (curr: any, max: any) => {
         const percent = Math.round(curr * 100 / max);

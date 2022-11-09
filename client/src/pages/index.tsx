@@ -17,9 +17,11 @@ import ForgotPage from "./ForgotPage";
 import ProfilePage from "./ProfilePage";
 import SettingsPage from "./SettingsPage";
 import LibraryPage from "./LibraryPage";
+import BookReader from "./BookReader";
 import {useAppSelector} from "../hooks/redux";
 import Loading from "../components/Loading";
 
+const PrivateRoutes: FC<PrivateRoutesProps> = ({isAuth}) => isAuth ? <Outlet/> : <Navigate to="/"/>;
 
 const Pages = () => {
     const {isAuth, isLoading: isLoadingAuth} = useAppSelector(state => state.auth);
@@ -45,21 +47,15 @@ const Pages = () => {
                     }
                     <Route element={<PrivateRoutes isAuth={isAuth}/>}>
                         <Route path="/profile" element={<ProfilePage/>}/>
-                        <Route path="/settings" element={<SettingsPage />}/>
-                        <Route path="/library" element={<LibraryPage />}/>
-                        {/*<Route path="/reader" element={<BookReader/>} />*/}
+                        <Route path="/settings" element={<SettingsPage/>}/>
+                        <Route path="/library" element={<LibraryPage/>}/>
+                        <Route path="/reader" element={<BookReader/>}/>
                         <Route path="*" element={<Navigate to="/profile" replace/>}/>
                     </Route>
                     <Route path="*" element={<Navigate to="/" replace/>}/>
                 </Routes>
             </Container>
         </Router>
-    );
-};
-
-const PrivateRoutes: FC<PrivateRoutesProps> = ({isAuth}) => {
-    return(
-        isAuth ? <Outlet/> : <Navigate to="/"/>
     );
 };
 

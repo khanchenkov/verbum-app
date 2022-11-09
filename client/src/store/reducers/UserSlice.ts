@@ -2,7 +2,17 @@ import {User, UserState} from "../../types/IState";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState: UserState = {
-    userInfo: {},
+    userInfo: {
+        id: 0,
+        email: "",
+        user_name: "",
+        status: "",
+        avatar: "",
+        reading_time: 0,
+        daily_goal: 0,
+        days_reading: 0,
+        is_activated: false
+    },
     isLoading: false,
     error: ""
 };

@@ -5,8 +5,8 @@ export interface HeaderProps {
 export interface NavModalProps {
     active: boolean
     setActive: any
-    avatar: string | undefined
-    name: string | undefined
+    avatar: string
+    name: string
 }
 export interface PrivateRoutesProps {
     isAuth: boolean
@@ -15,16 +15,16 @@ export interface DarkModeButtonProps {
     onClick: () => void
 }
 export interface UserInfoProps {
-    name: string | undefined
-    avatar: string | undefined
-    status: string | undefined
+    name: string
+    avatar: string
+    status: string
     booksReading: number
     booksRead: number
 }
 export interface ReadingInfoProps {
-    daily_goal: number | undefined
-    days_reading: number | undefined
-    reading_time: number | undefined
+    daily_goal: number
+    days_reading: number
+    reading_time: number
 }
 export interface UserImageProps {
     src: (string & ArrayBuffer) | string | null | undefined

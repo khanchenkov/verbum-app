@@ -1,10 +1,20 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Book, BookState} from "../../types/IState";
-import libraryBook from "../../components/LibraryBook";
 
 const initialState: BookState = {
     library: [],
-    currentBook: {},
+    currentBook: {
+        id: 0,
+        title: "",
+        author: "",
+        book_path: "",
+        thumbnail_path: "",
+        pages: 0,
+        current_page: 0,
+        is_reading: false,
+        is_read: false,
+        user_id: 0
+    },
     isLoading: false,
     error: ""
 };
@@ -25,6 +35,9 @@ export const bookSlice = createSlice({
         fetchingBooksError(state, action: PayloadAction<string>) {
             state.isLoading = false;
             state.error = action.payload;
+        },
+        setCurrentBook(state, action: PayloadAction<number>) {
+            state.currentBook = state.library.find((item: Book) => item.id === action.payload);
         },
         uploadingBookSuccess(state) {
             state.isLoading = false;
