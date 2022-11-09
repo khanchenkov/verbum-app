@@ -43,12 +43,18 @@ class BookService {
     }
     async removeBook(id) {
         const [removedBook] = await pg("book").del().where("id", id).returning("*");
-        fs.unlink(removedBook.path, (err) => {
+        fs.unlink(removedBook.book_path, (err) => {
             if (err) console.log(err);
             else {
-                console.log("File was deleted.");
+                console.log("Book file was deleted.");
             }
-        })
+        });
+        fs.unlink(removedBook.thumbnail_path, (err) => {
+            if (err) console.log(err);
+            else {
+                console.log("Thumbnail was deleted.");
+            }
+        });
     }
     async createBookList(name, id, refreshToken) {
         const userId = id === null ? tokenService.validateRefreshToken(refreshToken).tokenPayload.id : id;

@@ -12,7 +12,7 @@ export const colors = {
         form: "#F7F7F4",
         loadingBg: "rgba(0, 0, 0, 0.2)",
         bookInfo: "#9F9F99",
-        utility: "#64645D"
+        utility: "#b7b7ab"
     },
     darkMode: {
         main: "#1E1E1E",
@@ -23,7 +23,8 @@ export const colors = {
         text: "#FFFFFF",
         form: "#08080b",
         loadingBg: "rgba(0, 0, 0, 0.2)",
-        bookInfo: "#9F9F99"
+        bookInfo: "#9F9F99",
+        utility: "#595952"
     }
 };
 

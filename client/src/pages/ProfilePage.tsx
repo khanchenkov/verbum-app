@@ -13,20 +13,15 @@ const UserPanel = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
-  @media (max-width: 1180px) {
+  @media (max-width: 850px) {
     flex-direction: column;
-    align-items: flex-start;
-  }
-  @media (max-width: 767px) {
-    margin-bottom: 20px;
   }
 `;
 
 const ProfilePage = () => {
+    const dispatch = useAppDispatch();
     const {avatar, user_name, status, daily_goal, days_reading, reading_time} = useAppSelector(state => state.user.userInfo);
     const books = useAppSelector(state => state.book.library)
-
-    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(getUserInfo());

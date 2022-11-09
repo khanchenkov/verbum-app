@@ -147,7 +147,7 @@ const SettingsPage = () => {
     useEffect(() => {
         setNewName(user_name);
         setNewStatus(status);
-        setNewGoal(daily_goal);
+        setNewGoal(daily_goal!/60);
     }, [user_name, status, daily_goal]);
     const setUploadedFile = (image: Blob) => {
         setFile(image);
@@ -169,7 +169,7 @@ const SettingsPage = () => {
                 data.append("avatar", file);
                 await UserService.updateImage(data);
             }
-            await dispatch(updateUserInfo(newName, newStatus, newGoal));
+            await dispatch(updateUserInfo(newName, newStatus, newGoal!*60));
             window.location.reload();
         } catch (e) {
             console.log(e);

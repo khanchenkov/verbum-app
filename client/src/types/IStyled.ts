@@ -1,7 +1,6 @@
 export interface ModalBg {
     active: boolean
 }
-export interface ProgressBarStyle {
-    percent: number
-    dailyGoal?: number
+export interface ProgressBarStyleProps {
+    degree: number
 }

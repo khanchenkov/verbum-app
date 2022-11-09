@@ -1,65 +1,70 @@
 import React, {FC} from 'react';
 import {ReadingInfoProps} from "../types/IProps";
 import styled from "styled-components";
-import {ProgressBarStyle} from "../types/IStyled";
+import {ProgressBarStyleProps} from "../types/IStyled";
 
-const ReadingInfoBLock = styled.div`
-  width: 100%;
-  max-width: 400px;
+const Progress = styled.div`
+  text-align: center;
 `;
-const ReadHeading = styled.span`
-  display: block;
-  font-size: 18px;
+const BarOverflow = styled.div`
+  position: relative;
+  overflow: hidden; 
+  width: 250px; 
+  height: 125px; 
+  margin-bottom: -15px; 
+`;
+const Bar = styled.div<ProgressBarStyleProps>`
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 250px; 
+  height: 250px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 10px solid ${(props) => props.theme.border};
+  border-bottom-color: ${(props) => props.theme.secondary};
+  border-right-color: ${(props) => props.theme.secondary};
+  transform: ${(props) => `rotate(${props.degree}deg)`};
+  transition: 1s ease-in-out;
+`;
+const ReadingGoalInfo = styled.div`
+  display: flex;
+  flex-direction: column;
   color: ${(props) => props.theme.text};
+  padding-top: 40px;
 `;
-const ReadingTime = styled.span`
-  display: block;
-  font-size: 18px;
-  margin-bottom: 5px;
-  color: ${(props) => props.theme.text};
+const ReadingToday = styled.span`
+  font-size: 16px;
 `;
-const ProgressBar = styled.div<ProgressBarStyle>`
-  height: 5px;
-  width: 100%;
-  background-color: ${(props) => props.theme.border};
-  border-radius: 5px;
-  margin-bottom: 15px;
-  div {
-    height: 5px;
-    width: ${props => props.percent && props.dailyGoal !== 0 ? (props.percent / 60) : 0}%;
-    max-width: 100%;
-    background-color: ${(props) => props.theme.secondary};
-    border-radius: 5px;
-  }
+const ReadingTimeClock = styled.span`
+  font-size: 30px;
 `;
-const ReadingGoal = styled.span`
-  display: block;
-  font-size: 14px;
-  margin-bottom: 5px;
-  color: ${(props) => props.theme.text};
-  span {
-    color: ${(props) => props.theme.secondary};
-  }
+const DailyGoalText = styled.span`
+  font-size: 12px;
 `;
 
-const ReadingInfo: FC<ReadingInfoProps> = ({days_reading, reading_time, daily_goal}) => {
+const ReadingInfo: FC<ReadingInfoProps> = ({days_reading, reading_time , daily_goal}) => {
     const getTime = (time?: number) => {
         const secondsToTime = time ? time : 0;
         return new Date(secondsToTime * 1000).toISOString().slice(11, 19);
     }
-    const getPercent = (reading?: number, read?: number) => {
-        return 100 * Number(reading) / Number(read);
+    const getDegreeProgress = (reading?: number, read?: number) => {
+        return reading! > read! ? 225 :  45 + (180 * Number(reading) / Number(read));
     }
 
     return (
-        <ReadingInfoBLock>
-            <ReadHeading>Reading today:</ReadHeading>
-            <ReadingTime>{getTime(reading_time)}</ReadingTime>
-            <ProgressBar percent={getPercent(reading_time, daily_goal)} dailyGoal={daily_goal}>
-                <div></div>
-            </ProgressBar>
-            <ReadingGoal>Goal: <span>{daily_goal} min</span></ReadingGoal>
-        </ReadingInfoBLock>
+        <Progress>
+            <BarOverflow>
+                <Bar
+                    degree={getDegreeProgress(reading_time, daily_goal)}
+                />
+                <ReadingGoalInfo>
+                    <ReadingToday>Reading today</ReadingToday>
+                    <ReadingTimeClock>{getTime(reading_time)}</ReadingTimeClock>
+                    <DailyGoalText>Daily goal {daily_goal!/60} min.</DailyGoalText>
+                </ReadingGoalInfo>
+            </BarOverflow>
+        </Progress>
     );
 };
 

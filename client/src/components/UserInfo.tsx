@@ -6,10 +6,8 @@ const UserInfoBlock = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  @media (max-width: 1180px) {
-    margin-bottom: 30px;
-  }
-  @media (max-width: 575px) {
+  @media (max-width: 850px) {
+    margin-bottom: 50px;
     width: 100%;
     flex-direction: column;
   }
@@ -19,12 +17,12 @@ const UserImage = styled.img`
   width: 125px;
   height: 125px;
   margin-right: 35px;
-  @media (max-width: 575px) {
+  @media (max-width: 850px) {
     margin: 0 0 15px;
   }
 `;
 const UserData = styled.div`
-  @media (max-width: 575px) {
+  @media (max-width: 850px) {
     text-align: center;
   }
 `;
@@ -40,7 +38,6 @@ const UserStatus = styled.p`
 `;
 const UserStats = styled.div`
   display: flex;
-  width: 200px;
   justify-content: space-between;
   div p {
     margin: 0;
@@ -49,6 +46,9 @@ const UserStats = styled.div`
   }
   div p:first-child {
     color: ${(props) => props.theme.secondary}
+  }
+  @media (max-width: 850px) {
+    margin: 0;
   }
 `;
 
