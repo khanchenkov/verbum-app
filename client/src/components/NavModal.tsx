@@ -1,22 +1,30 @@
 import React, {FC} from 'react';
 import {NavModalProps} from "../types/IProps";
 import {modalBackground as Modal, Divider, SettingsElement, SettingsButton} from "../styles/UILibrary";
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import {useNavigate} from "react-router-dom";
 import {logoutUser} from "../store/actions/AuthActionCreators";
 import {useAppDispatch} from "../hooks/redux";
 import DarkModeButton from "./DarkModeButton";
+import {ModalContentStyleProps} from "../types/IStyled";
 
-const ModalContent = styled.div`
-  position: relative;
-  left: 0;
-  top: 0;
-  z-index: 100000000;
+const ModalContent = styled.div<ModalContentStyleProps>`
+  position: absolute;
+  z-index: 9999;
   padding: 30px 35px;
   border-radius: 5px;
   width: 230px;
   background-color: ${(props) => props.theme.main};
-  margin: 57px calc((100% - (calc(300px + (1140 - 300) * ((100vw - 320px)/(1440 - 320))))) / 2) 0 0;
+  ${(props) => props.position === "header" && css`
+    right: 0;
+    top: 0;
+    margin: 57px calc((100% - (calc(300px + (1140 - 300) * ((100vw - 320px)/(1440 - 320))))) / 2) 0 0;
+  `};
+  ${(props) => props.position === "footer" && css`
+    left: 0;
+    bottom: 0;
+    margin: 0 0 47px 15px;
+  `};
 `;
 const UserImage = styled.img`
   display: block;
@@ -40,7 +48,7 @@ const LogoutNTheme = styled.div`
   justify-content: space-between;
 `;
 
-const NavModal: FC<NavModalProps> = ({active, setActive, avatar, name}) => {
+const NavModal: FC<NavModalProps> = ({active, setActive, avatar, name, position}) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
@@ -62,7 +70,7 @@ const NavModal: FC<NavModalProps> = ({active, setActive, avatar, name}) => {
 
     return (
         <Modal onClick={hideModal} active={active}>
-            <ModalContent onClick={e => e.stopPropagation()}>
+            <ModalContent onClick={e => e.stopPropagation()} position={position}>
                 <UserImage src={avatar}/>
                 <UserName>{name}</UserName>
                 <Divider/>

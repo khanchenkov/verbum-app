@@ -24,6 +24,7 @@ import Loading from "../components/Loading";
 const PrivateRoutes: FC<PrivateRoutesProps> = ({isAuth}) => isAuth ? <Outlet/> : <Navigate to="/"/>;
 
 const Pages = () => {
+    const currentBook = useAppSelector(state => state.book.currentBook);
     const {isAuth, isLoading: isLoadingAuth} = useAppSelector(state => state.auth);
     const isLoadingUser = useAppSelector(state => state.user.isLoading);
     const isLoadingBook = useAppSelector(state => state.book.isLoading);
@@ -49,7 +50,7 @@ const Pages = () => {
                         <Route path="/profile" element={<ProfilePage/>}/>
                         <Route path="/settings" element={<SettingsPage/>}/>
                         <Route path="/library" element={<LibraryPage/>}/>
-                        <Route path="/reader" element={<BookReader/>}/>
+                        {currentBook && <Route path="/reader" element={<BookReader/>}/>}
                         <Route path="*" element={<Navigate to="/profile" replace/>}/>
                     </Route>
                     <Route path="*" element={<Navigate to="/" replace/>}/>

@@ -146,3 +146,32 @@ export const SettingsButton = styled.button`
     background: ${(props) => props.theme.border};
   }
 `;
+export const SliderInput = styled.input`
+  width: ${(props) => `${props.width}`};
+  appearance: none;
+  height: 5px;
+  outline: none;
+  border-radius: 1px;
+  background-color: ${(props) => props.theme.secondary};
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    background-color: ${(props) => props.theme.main};
+    border: .2rem solid ${(props) => props.theme.secondary};
+    border-radius: 1rem;
+    cursor: pointer;
+  }
+`;
+
+interface ProfileImageStyleProps {
+    size: string
+}
+export const ProfileImage = styled.img<ProfileImageStyleProps>`
+  display: block;
+  width: ${(props) => `${props.size}`};
+  height: ${(props) => `${props.size}`};
+  border-radius: 100%;
+  object-fit: cover;
+  cursor: pointer;
+`;

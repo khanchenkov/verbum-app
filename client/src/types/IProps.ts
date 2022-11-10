@@ -7,6 +7,7 @@ export interface NavModalProps {
     setActive: any
     avatar: string
     name: string
+    position: string
 }
 export interface PrivateRoutesProps {
     isAuth: boolean

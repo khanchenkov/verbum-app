@@ -25,6 +25,7 @@ const BookThumbnailWrapper = styled.div`
   @media (max-width: 575px) {
     height: 100px;
     width: 65px;
+    margin-right: 15px;
   }
 `;
 const BookThumbnail = styled.img`

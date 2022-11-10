@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import styled from "styled-components"
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {FormSubmit, FormError} from "../styles/UILibrary";
+import {FormSubmit, FormError, SliderInput} from "../styles/UILibrary";
 import image from "../assets/images/greeting-image.jpg";
 import AuthService from "../services/AuthService";
 import UserService from "../services/UserService";
@@ -110,28 +110,6 @@ const NumInput = styled.input`
   background-color: ${(props) => props.theme.main};
   color: ${(props) => props.theme.text};
 `;
-const Slider = styled.input`
-  appearance: none;
-  width: 80%;
-  height: 5px;
-  outline: none;
-  border-radius: 1px;
-  margin-right: 10px;
-  background-color: ${(props) => props.theme.secondary};
-  margin-bottom: 25px;
-  &::-webkit-slider-thumb {
-    appearance: none;
-    width: 1rem;
-    height: 1rem;
-    background-color: ${(props) => props.theme.main};
-    border: .2rem solid ${(props) => props.theme.secondary};
-    border-radius: 1rem;
-    cursor: pointer;
-  }
-  @media (max-width: 575px) {
-    width: 70%;
-  }
-`;
 
 const SettingsPage = () => {
     const {id, is_activated, avatar, user_name, status, daily_goal} = useAppSelector(state => state.user.userInfo);
@@ -217,12 +195,13 @@ const SettingsPage = () => {
                         onChange={e => setNewStatus(e.target.value)}
                     />
                     <LabelInput>Reading daily goal (min. a day)</LabelInput>
-                    <Slider
+                    <SliderInput
                         type="range"
                         min={0}
                         max={1440}
                         step={5}
                         value={newGoal}
+                        width={"80%"}
                         onChange={e => setNewGoal(Number(e.target.value))}
                     />
                     <NumInput
