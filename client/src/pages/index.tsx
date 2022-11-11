@@ -21,6 +21,8 @@ import BookReader from "./BookReader";
 import {useAppSelector} from "../hooks/redux";
 import Loading from "../components/Loading";
 
+import Test from "./Test";
+
 const PrivateRoutes: FC<PrivateRoutesProps> = ({isAuth}) => isAuth ? <Outlet/> : <Navigate to="/"/>;
 
 const Pages = () => {
@@ -51,6 +53,7 @@ const Pages = () => {
                         <Route path="/settings" element={<SettingsPage/>}/>
                         <Route path="/library" element={<LibraryPage/>}/>
                         {currentBook && <Route path="/reader" element={<BookReader/>}/>}
+                        {/*{currentBook && <Route path="/reader" element={<Test/>}/>}*/}
                         <Route path="*" element={<Navigate to="/profile" replace/>}/>
                     </Route>
                     <Route path="*" element={<Navigate to="/" replace/>}/>

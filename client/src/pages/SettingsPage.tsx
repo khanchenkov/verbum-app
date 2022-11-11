@@ -109,6 +109,7 @@ const NumInput = styled.input`
   width: 60px;
   background-color: ${(props) => props.theme.main};
   color: ${(props) => props.theme.text};
+  margin-bottom: 15px;
 `;
 
 const SettingsPage = () => {
