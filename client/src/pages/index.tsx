@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, {FC, useRef} from "react";
 import {PrivateRoutesProps} from "../types/IProps";
 import {Container} from "../styles/UILibrary";
 import {
@@ -21,8 +21,6 @@ import BookReader from "./BookReader";
 import {useAppSelector} from "../hooks/redux";
 import Loading from "../components/Loading";
 
-import Test from "./Test";
-
 const PrivateRoutes: FC<PrivateRoutesProps> = ({isAuth}) => isAuth ? <Outlet/> : <Navigate to="/"/>;
 
 const Pages = () => {
@@ -31,12 +29,13 @@ const Pages = () => {
     const isLoadingUser = useAppSelector(state => state.user.isLoading);
     const isLoadingBook = useAppSelector(state => state.book.isLoading);
     const anyDataLoading = isLoadingUser || isLoadingAuth || isLoadingBook;
+    const containerRef = useRef<HTMLDivElement>(null);
 
     return (
         <Router>
             {anyDataLoading && <Loading/>}
             <Header isAuth={isAuth}/>
-            <Container>
+            <Container ref={containerRef}>
                 <Routes>
                     {
                         !isAuth &&
@@ -52,8 +51,7 @@ const Pages = () => {
                         <Route path="/profile" element={<ProfilePage/>}/>
                         <Route path="/settings" element={<SettingsPage/>}/>
                         <Route path="/library" element={<LibraryPage/>}/>
-                        {currentBook && <Route path="/reader" element={<BookReader/>}/>}
-                        {/*{currentBook && <Route path="/reader" element={<Test/>}/>}*/}
+                        {currentBook && <Route path="/reader" element={<BookReader containerRef={containerRef}/>}/>}
                         <Route path="*" element={<Navigate to="/profile" replace/>}/>
                     </Route>
                     <Route path="*" element={<Navigate to="/" replace/>}/>

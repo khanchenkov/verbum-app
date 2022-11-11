@@ -38,3 +38,14 @@ export interface UploadBookModalProps {
     active: boolean
     setActive: any
 }
+export interface ReaderFooterProps {
+    pageNumber: number
+    numPages: number
+    zoomValue: number
+    changePageNext: () => void
+    changePageBack: () => void
+    setZoomValue: any
+}
+export interface BookReaderProps {
+    containerRef: any
+}

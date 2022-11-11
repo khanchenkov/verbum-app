@@ -10,3 +10,6 @@ export interface ModalContentStyleProps {
 export interface HeaderBlockStyleProps {
     location: string
 }
+export interface PageBlockProps {
+    viewportHeight: number
+}

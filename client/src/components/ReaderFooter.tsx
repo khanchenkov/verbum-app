@@ -3,6 +3,7 @@ import styled from "styled-components";
 import NavModal from "./NavModal";
 import {ProfileImage, SliderInput} from "../styles/UILibrary";
 import {useAppSelector} from "../hooks/redux";
+import {ReaderFooterProps} from "../types/IProps";
 
 const FooterBlock = styled.footer`
   position: fixed;
@@ -66,15 +67,6 @@ const ZoomValue = styled.span`
   margin-right: 10px;
   color: ${(props) => props.theme.text};
 `;
-
-interface ReaderFooterProps {
-    pageNumber: number
-    numPages: number
-    zoomValue: number
-    changePageNext: () => void
-    changePageBack: () => void
-    setZoomValue: any
-}
 
 const ReaderFooter: FC<ReaderFooterProps> = ({pageNumber, numPages, changePageNext, changePageBack, zoomValue, setZoomValue}) => {
     const {avatar, user_name} = useAppSelector(state => state.user.userInfo);
