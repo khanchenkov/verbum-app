@@ -7,7 +7,7 @@ const helmet = require("helmet");
 const errorMiddleware = require("./middlewares/error.middleware");
 const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
-const bookRoutes = require('./routes/book.routes');
+const bookRoutes = require("./routes/book.routes");
 
 const app = express();
 const PORT = process.env.PORT ?? 5000;
@@ -23,10 +23,15 @@ app.use(cors({ credentials: true, origin }));
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use('/api/user', userRoutes);
-app.use('/api/book', bookRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/book", bookRoutes);
 
 app.use(errorMiddleware);
+
+app.use(express.static(path.join(__dirname, "public")));
+app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 (async () => {
     try {
