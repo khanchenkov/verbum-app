@@ -34,6 +34,12 @@ export const userSlice = createSlice({
             state.isLoading = false;
             state.error = action.payload;
         },
+        resetUserData(state) {
+            state = initialState
+        },
+        updateReadingTime(state, action: PayloadAction<number>) {
+            state.userInfo.reading_time += action.payload;
+        },
         resetReadingTime(state) {
             state.userInfo.reading_time = 0;
         }

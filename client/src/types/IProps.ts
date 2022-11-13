@@ -49,3 +49,7 @@ export interface ReaderFooterProps {
 export interface BookReaderProps {
     containerRef: any
 }
+export interface CollectionListProps {
+    children?: JSX.Element[]
+    collectionName: string
+}

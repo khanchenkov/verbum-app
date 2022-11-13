@@ -42,6 +42,12 @@ export const bookSlice = createSlice({
         uploadingBookSuccess(state) {
             state.isLoading = false;
             state.error = "";
+        },
+        resetBookData(state) {
+            state = initialState
+        },
+        updateCurrentBookPages(state, action: PayloadAction<number>) {
+            state.currentBook!.current_page = action.payload;
         }
     }
 });

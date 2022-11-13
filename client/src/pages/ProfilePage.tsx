@@ -1,9 +1,10 @@
-import React, {useEffect} from "react";
+import React from "react";
 import styled from "styled-components";
-import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {useAppSelector} from "../hooks/redux";
 import UserInfo from "../components/UserInfo";
 import ReadingInfo from "../components/ReadingInfo";
-import {getUserInfo} from "../store/actions/UserActionCreators";
+import CollectionList from "../components/CollectionList";
+import LibraryBook from "../components/LibraryBook";
 
 const ProfilePageBlock = styled.div`
   margin-top: 30px;
@@ -19,13 +20,8 @@ const UserPanel = styled.div`
 `;
 
 const ProfilePage = () => {
-    const dispatch = useAppDispatch();
     const {avatar, user_name, status, daily_goal, days_reading, reading_time} = useAppSelector(state => state.user.userInfo);
     const books = useAppSelector(state => state.book.library)
-
-    useEffect(() => {
-        dispatch(getUserInfo());
-    }, [dispatch]);
 
     return (
         <ProfilePageBlock>
@@ -43,21 +39,9 @@ const ProfilePage = () => {
                     reading_time={reading_time}
                 />
             </UserPanel>
-            {/*<CollectionList collectionName={"Текущие"} isTypeUnread={false}>*/}
-            {/*    <CurrentBook/>*/}
-            {/*    <CurrentBook/>*/}
-            {/*    <CurrentBook/>*/}
-            {/*</CollectionList>*/}
-            {/*<CollectionList collectionName={"Хочу прочитать"} isTypeCollection={true}>*/}
-            {/*    <UnreadBook/>*/}
-            {/*    <UnreadBook/>*/}
-            {/*    <UnreadBook/>*/}
-            {/*    <UnreadBook/>*/}
-            {/*    <UnreadBook/>*/}
-            {/*    <UnreadBook/>*/}
-            {/*    <UnreadBook/>*/}
-            {/*    <UnreadBook/>*/}
-            {/*</CollectionList>*/}
+            <CollectionList collectionName="Reading now">
+                {books.filter(el => el.is_reading === true).map(item => <LibraryBook key={item.id} {...item}/>)}
+            </CollectionList>
         </ProfilePageBlock>
     );
 };

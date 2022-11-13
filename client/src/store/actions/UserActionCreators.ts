@@ -9,7 +9,7 @@ export const getUserInfo = () => async (dispatch: AppDispatch) => {
         let responseData = {...response.data};
         const userDate = new Date(response.data.user_current_date).toLocaleDateString();
         const currentDate = new Date().toLocaleDateString();
-        if (userDate > currentDate) {
+        if (userDate < currentDate) {
             responseData = {...response.data, reading_time: 0};
             await UserService.updateReadingDate(currentDate);
         }

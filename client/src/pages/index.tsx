@@ -17,7 +17,7 @@ import ForgotPage from "./ForgotPage";
 import ProfilePage from "./ProfilePage";
 import SettingsPage from "./SettingsPage";
 import LibraryPage from "./LibraryPage";
-import BookReader from "./BookReader";
+import BookReaderPage from "./BookReaderPage";
 import {useAppSelector} from "../hooks/redux";
 import Loading from "../components/Loading";
 
@@ -29,6 +29,7 @@ const Pages = () => {
     const isLoadingUser = useAppSelector(state => state.user.isLoading);
     const isLoadingBook = useAppSelector(state => state.book.isLoading);
     const anyDataLoading = isLoadingUser || isLoadingAuth || isLoadingBook;
+    // const anyDataLoading = false
     const containerRef = useRef<HTMLDivElement>(null);
 
     return (
@@ -51,7 +52,7 @@ const Pages = () => {
                         <Route path="/profile" element={<ProfilePage/>}/>
                         <Route path="/settings" element={<SettingsPage/>}/>
                         <Route path="/library" element={<LibraryPage/>}/>
-                        {currentBook && <Route path="/reader" element={<BookReader containerRef={containerRef}/>}/>}
+                        {currentBook && <Route path="/reader" element={<BookReaderPage containerRef={containerRef}/>}/>}
                         <Route path="*" element={<Navigate to="/profile" replace/>}/>
                     </Route>
                     <Route path="*" element={<Navigate to="/" replace/>}/>

@@ -11,6 +11,7 @@ export const registerUser = (email: string, password: string) => async (dispatch
         const response = await AuthService.registration(email, password);
         localStorage.setItem("token", response.data.accessToken);
         dispatch(authSlice.actions.authFetchingSuccess(response.status === 200));
+        window.location.reload()
     } catch (e: any) {
         dispatch(authSlice.actions.authFetchingError(e.response?.data?.message));
     }
@@ -21,6 +22,7 @@ export const loginUser = (email: string, password: string) => async (dispatch: A
         const response = await AuthService.login(email, password);
         localStorage.setItem("token", response.data.accessToken);
         dispatch(authSlice.actions.authFetchingSuccess(response.status === 200));
+        window.location.reload()
     } catch (e: any) {
         dispatch(authSlice.actions.authFetchingError(e.response?.data?.message));
     }
@@ -28,11 +30,12 @@ export const loginUser = (email: string, password: string) => async (dispatch: A
 export const logoutUser = () => async (dispatch: AppDispatch) => {
     try {
         dispatch(authSlice.actions.authFetching());
+        dispatch(bookSlice.actions.resetBookData());
+        dispatch(userSlice.actions.resetUserData());
+        dispatch(authSlice.actions.authLogout());
         await AuthService.logout();
         await persistor.purge();
-        dispatch(authSlice.actions.authLogout());
         localStorage.removeItem("token");
-        await persistor.flush();
     } catch (e: any) {
         dispatch(authSlice.actions.authFetchingError(e.response?.data?.message));
     }

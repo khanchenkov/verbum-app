@@ -22,3 +22,12 @@ export const uploadBook = (data: any) => async (dispatch: AppDispatch) => {
         dispatch(bookSlice.actions.fetchingBooksError(e.response?.data?.message));
     }
 };
+export const updateBook = (bookId: number, readingTime: number, currentPage: number, pages: number) => async (dispatch: AppDispatch) => {
+    try {
+        // TODO: need to make less requests (send data before page unmounted, probably)
+        await BookService.updateReadingData(bookId, readingTime, currentPage, pages);
+    } catch (e: any) {
+        console.log(e.response?.data?.message)
+        dispatch(bookSlice.actions.fetchingBooksError(e.response?.data?.message));
+    }
+};
