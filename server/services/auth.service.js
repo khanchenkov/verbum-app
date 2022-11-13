@@ -4,7 +4,7 @@ const pg = require("../database/database");
 const ApiError = require("../exceptions/api.error");
 const mailService = require("../services/mail.service");
 const tokenService = require("../services/token.service");
-const bookService = require("../services/book.service");
+
 const API_URL = process.env.PRODUCTION === "true" ? process.env.DEPLOY_API_URL : process.env.LOCAL_API_URL;
 
 class AuthService {
@@ -44,7 +44,6 @@ class AuthService {
             throw ApiError.BadRequest("Invalid activation link.");
         }
         await pg("user").update({is_activated: true}).where("id", userData.id);
-        await bookService.createBookList("Want to read", userData.id, null)
     }
     async login(email, password) {
         const [user] = await pg("user").select("*").where("email", email);

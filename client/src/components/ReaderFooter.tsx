@@ -18,9 +18,6 @@ const FooterBlock = styled.footer`
   background-color: ${(props) => props.theme.main};
   text-align: center;
   height: 45px;
-  @media(max-width: 575px) {
-    height: 40px;
-  }
 `;
 const ProfileModalBlock = styled.div`
   width: 150px;

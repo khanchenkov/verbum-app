@@ -5,6 +5,7 @@ import BookSettingsModal from "./BookSettingsModal";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../hooks/redux";
 import {bookSlice} from "../store/reducers/BookSlice";
+import BookImageCap from "../assets/images/book-image-cap.jpg";
 
 const LibraryBookBlock = styled.div`
   position: relative;
@@ -28,6 +29,7 @@ const BookThumbnailWrapper = styled.div`
     margin-right: 15px;
   }
 `;
+
 const BookThumbnail = styled.img`
   box-shadow: 0 0 5px rgba(0,0,0,0.2);
   height: 200px;
@@ -35,6 +37,8 @@ const BookThumbnail = styled.img`
   border-radius: 5px;
   margin-right: 20px;
   background-color: ${(props) => props.theme.text};
+  color: ${(props) => props.theme.main};
+  font-size: 12px;
   @media (max-width: 575px) {
     height: 100px;
     width: 65px;
@@ -115,7 +119,15 @@ const LibraryBook = ({book_path, title, author, is_read, is_reading, current_pag
     return (
         <LibraryBookBlock>
             <BookThumbnailWrapper onClick={openBook}>
-                <BookThumbnail src={thumbnail_path} alt={title} loading={"lazy"}/>
+                <BookThumbnail
+                    src={thumbnail_path + "asd"}
+                    alt={title}
+                    loading={"lazy"}
+                    onError={({ currentTarget }) => {
+                        currentTarget.onerror = null;
+                        currentTarget.src=BookImageCap;
+                    }}
+                />
             </BookThumbnailWrapper>
             <BookData>
                 <BookName onClick={openBook}>{shortenName(title)}</BookName>

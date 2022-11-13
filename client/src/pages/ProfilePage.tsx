@@ -13,7 +13,7 @@ const UserPanel = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 75px;
   @media (max-width: 850px) {
     flex-direction: column;
   }

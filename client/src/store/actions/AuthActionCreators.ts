@@ -47,7 +47,7 @@ export const refresh = () => async (dispatch: AppDispatch) => {
         localStorage.setItem("token", response.data.accessToken);
         dispatch(authSlice.actions.authFetchingSuccess(response.status === 200));
     } catch (e: any) {
-        console.log(e.response?.data?.message);
+        dispatch(authSlice.actions.authFetchingError(e.response?.data?.message));
     }
 };
 export const forgot = (email: string) => async (dispatch: AppDispatch) => {

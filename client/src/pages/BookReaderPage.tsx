@@ -90,9 +90,11 @@ const BookReaderPage: FC<BookReaderProps> = ({containerRef}) => {
         return () => {canvas.style.width = "calc(280px + (1140 - 280) * ((100vw - 280px) / (1440 - 280)))"}
     }, [containerRef]);
     useEffect(() => {
+        dispatch(bookSlice.actions.fetchingBooks());
         const loadingTask = pdfJs.getDocument(book_path);
         loadingTask.promise.then(loadedPdf => setPdfFile(loadedPdf));
-    }, [book_path]);
+        dispatch(bookSlice.actions.uploadingBookSuccess());
+    }, [book_path, dispatch]);
     useEffect(() => {
         setOffset(1);
         const currentPage = current_page === 0 ? 1 : current_page;
