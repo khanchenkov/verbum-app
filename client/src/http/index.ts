@@ -1,6 +1,5 @@
 import axios, {AxiosRequestConfig} from "axios";
-
-export const API_URL = `http://localhost:5000/api`;
+export const API_URL = process.env.NODE_ENV === "production" ? process.env.REACT_APP_DEPLOY_API : process.env.REACT_APP_LOCAL_API;
 
 const $api = axios.create({
     withCredentials: true,

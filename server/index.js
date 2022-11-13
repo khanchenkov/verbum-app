@@ -21,6 +21,9 @@ app.use("/assets", express.static(path.join(__dirname, "assets")));
 app.use(cookieParser());
 app.use(cors({ credentials: true, origin }));
 
+
+//psql --host=ec2-44-195-132-31.compute-1.amazonaws.com --port=5432 --username=ptqbzwkkpbuwjx --password --dbname=d2trdpphcvp741
+//d75c5cdefebadbf3763aa25419f95c8711b17c0c1704b9988e80846f725c886b
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);

@@ -31,7 +31,7 @@ const App = () => {
             }
         }, 1000 * 60 * 29)
         return () => clearTimeout(reloadTimer);
-    }, []);
+    }, [dispatch]);
 
     return (
       <ThemeProvider theme={isDarkMode ? colors.darkMode : colors.lightMode}>

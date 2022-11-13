@@ -1,8 +1,11 @@
-require("dotenv").config();
+const knex = require("knex");
+const parse = require("pg-connection-string").parse;
+const pgconfig = parse(process.env.DATABASE_URL);
+pgconfig.ssl = { rejectUnauthorized: false };
 
-const pg = require("knex")({
+const pg = knex({
     client: "pg",
-    connection: process.env.DATABASE_URL
+    connection: pgconfig,
 });
 
 module.exports = pg;

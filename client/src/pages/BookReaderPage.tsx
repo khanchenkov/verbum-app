@@ -7,7 +7,6 @@ import {PageBlockProps} from "../types/IStyled";
 import * as pdfJs from "pdfjs-dist";
 import pdfJsWorker from "pdfjs-dist/build/pdf.worker.entry";
 import {PDFPageProxy, PDFDocumentProxy, RenderParameters} from "pdfjs-dist/types/src/display/api";
-import * as pdfjsLib from "pdfjs-dist";
 import {bookSlice} from "../store/reducers/BookSlice";
 import {userSlice} from "../store/reducers/UserSlice";
 import {updateBook} from "../store/actions/BookActionCreators";
@@ -27,7 +26,6 @@ const BookReaderPage: FC<BookReaderProps> = ({containerRef}) => {
     const dispatch = useAppDispatch();
     const {book_path, pages, current_page, id} = useAppSelector(state => state.book.currentBook!);
     const reading_time = useAppSelector(state => state.user.userInfo.reading_time)
-
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [pdfFile, setPdfFile] = useState<PDFDocumentProxy>();
     const [pageNumber, setPageNumber] = useState<number>(1);
@@ -35,7 +33,6 @@ const BookReaderPage: FC<BookReaderProps> = ({containerRef}) => {
     const [numPages, setNumPages] = useState<number>(pages);
     const [zoomValue, setZoomValue] = useState<number>(100);
     const [viewportHeight, setViewportHeight] = useState<number>(0);
-    const [seconds, setSeconds] = useState<number>(0);
 
     const renderPage = useCallback((pageNum: number, pdf = pdfFile) => {
         pdf && pdf.getPage(pageNum).then(function(page: PDFPageProxy) {
@@ -64,16 +61,16 @@ const BookReaderPage: FC<BookReaderProps> = ({containerRef}) => {
             dispatch(bookSlice.actions.uploadingBookSuccess());
         });
     }, [pdfFile, zoomValue, dispatch]);
-    const changePage = async (offset: number) => {
+    const changePage = useCallback(async (offset: number) => {
         await dispatch(bookSlice.actions.updateCurrentBookPages(pageNumber + offset));
         setPageNumber(prevPage => prevPage + offset);
-    };
+    }, [dispatch, pageNumber])
     const changePageNext = useCallback(() => {
         (pageNumber + 1) <= numPages && changePage(+offset);
-    }, [pageNumber, offset, numPages]);
+    }, [pageNumber, offset, numPages, changePage]);
     const changePageBack = useCallback(() => {
         pageNumber > offset && changePage(-offset);
-    }, [pageNumber, offset]);
+    }, [pageNumber, offset, changePage]);
     const keyPressHandler = useCallback((e: any) => {
         if (e.keyCode === 39  && (pageNumber + 1) <= numPages) {
             changePageNext();
@@ -93,7 +90,7 @@ const BookReaderPage: FC<BookReaderProps> = ({containerRef}) => {
         return () => {canvas.style.width = "calc(280px + (1140 - 280) * ((100vw - 280px) / (1440 - 280)))"}
     }, [containerRef]);
     useEffect(() => {
-        const loadingTask = pdfjsLib.getDocument(book_path);
+        const loadingTask = pdfJs.getDocument(book_path);
         loadingTask.promise.then(loadedPdf => setPdfFile(loadedPdf));
     }, [book_path]);
     useEffect(() => {
@@ -101,21 +98,17 @@ const BookReaderPage: FC<BookReaderProps> = ({containerRef}) => {
         const currentPage = current_page === 0 ? 1 : current_page;
         setPageNumber(currentPage);
         renderPage(pageNumber, pdfFile);
+        // eslint-disable-next-line
     }, [pdfFile, pageNumber, renderPage]);
-
-
     useEffect(() => {
         const readingTimeInterval = setInterval(async () => {
-            setSeconds(seconds => seconds + 1);
             await dispatch(userSlice.actions.updateReadingTime(1));
         }, 1000);
         return () => clearInterval(readingTimeInterval);
-    }, []);
-
-
+    }, [dispatch]);
     useEffect(() => {
         (() => dispatch(updateBook(id, reading_time, current_page, pages)))()
-    }, [current_page, reading_time])
+    }, [current_page, reading_time, dispatch, pages, id]);
 
     return (
         <BookReaderBlock>
