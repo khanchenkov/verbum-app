@@ -36,7 +36,6 @@ const BookReaderPage: FC<BookReaderProps> = ({containerRef}) => {
 
     const renderPage = useCallback((pageNum: number, pdf = pdfFile) => {
         pdf && pdf.getPage(pageNum).then(function(page: PDFPageProxy) {
-            dispatch(bookSlice.actions.fetchingBooks());
             const canvas = canvasRef.current!;
             const viewport = page.getViewport({scale: 1});
             const desiredHeight = document.body.clientHeight - 65;
@@ -58,8 +57,8 @@ const BookReaderPage: FC<BookReaderProps> = ({containerRef}) => {
             setNumPages(pdf.numPages);
             setViewportHeight(scaledViewport.height)
             page.render(renderContext);
-            dispatch(bookSlice.actions.uploadingBookSuccess());
         });
+        dispatch(bookSlice.actions.uploadingBookSuccess());
     }, [pdfFile, zoomValue, dispatch]);
     const changePage = useCallback(async (offset: number) => {
         await dispatch(bookSlice.actions.updateCurrentBookPages(pageNumber + offset));
@@ -90,10 +89,10 @@ const BookReaderPage: FC<BookReaderProps> = ({containerRef}) => {
         return () => {canvas.style.width = "calc(280px + (1140 - 280) * ((100vw - 280px) / (1440 - 280)))"}
     }, [containerRef]);
     useEffect(() => {
-        dispatch(bookSlice.actions.fetchingBooks());
         const loadingTask = pdfJs.getDocument(book_path);
-        loadingTask.promise.then(loadedPdf => setPdfFile(loadedPdf));
-        dispatch(bookSlice.actions.uploadingBookSuccess());
+        loadingTask.promise.then(loadedPdf => {
+            setPdfFile(loadedPdf)
+        });
     }, [book_path, dispatch]);
     useEffect(() => {
         setOffset(1);

@@ -39,8 +39,9 @@ const UserStatus = styled.p`
 const UserStats = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 230px;
   div p {
-    margin: 0;
+    margin: 0 0 0 0;
     font-size: 14px;
     color: ${(props) => props.theme.text};
   }

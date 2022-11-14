@@ -21,7 +21,7 @@ class AuthService {
             user_name: "Reader",
             avatar: "assets\\profile-image-cap.png",
             status: "My status",
-            user_current_date: new Date(),
+            user_current_date: "14.02.2000",
             days_reading: 0,
             daily_goal: 0,
             reading_time: 0,

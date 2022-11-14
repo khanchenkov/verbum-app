@@ -29,7 +29,6 @@ const Pages = () => {
     const isLoadingUser = useAppSelector(state => state.user.isLoading);
     const isLoadingBook = useAppSelector(state => state.book.isLoading);
     const anyDataLoading = isLoadingUser || isLoadingAuth || isLoadingBook;
-    // const anyDataLoading = false
     const containerRef = useRef<HTMLDivElement>(null);
 
     return (

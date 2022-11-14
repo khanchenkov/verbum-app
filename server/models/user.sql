@@ -5,7 +5,7 @@ create TABLE "user" (
     user_name VARCHAR(255),
     status TEXT,
     avatar TEXT,
-    user_current_date DATE,
+    user_current_date VARCHAR(255),
     days_reading INT,
     daily_goal INT,
     reading_time INT,

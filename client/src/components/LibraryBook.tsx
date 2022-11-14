@@ -120,7 +120,7 @@ const LibraryBook = ({book_path, title, author, is_read, is_reading, current_pag
         <LibraryBookBlock>
             <BookThumbnailWrapper onClick={openBook}>
                 <BookThumbnail
-                    src={thumbnail_path + "asd"}
+                    src={thumbnail_path}
                     alt={title}
                     loading={"lazy"}
                     onError={({ currentTarget }) => {

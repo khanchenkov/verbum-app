@@ -7,7 +7,7 @@ server/data/
 
 **/logs
 npm-debug.log*
-**/build
+server/public/build
 *.local
 
 .idea

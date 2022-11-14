@@ -7,7 +7,7 @@ export const getUserInfo = () => async (dispatch: AppDispatch) => {
         dispatch(userSlice.actions.fetchingUser());
         const response = await UserService.getUserInfo();
         let responseData = {...response.data};
-        const userDate = new Date(response.data.user_current_date).toLocaleDateString();
+        const userDate = response.data.user_current_date;
         const currentDate = new Date().toLocaleDateString();
         if (userDate < currentDate) {
             responseData = {...response.data, reading_time: 0};
