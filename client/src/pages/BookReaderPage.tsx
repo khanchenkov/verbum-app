@@ -10,6 +10,7 @@ import {PDFPageProxy, PDFDocumentProxy, RenderParameters} from "pdfjs-dist/types
 import {bookSlice} from "../store/reducers/BookSlice";
 import {userSlice} from "../store/reducers/UserSlice";
 import {updateBook} from "../store/actions/BookActionCreators";
+import Loading from "../components/Loading";
 pdfJs.GlobalWorkerOptions.workerSrc = pdfJsWorker;
 
 const BookReaderBlock = styled.div`
@@ -33,9 +34,11 @@ const BookReaderPage: FC<BookReaderProps> = ({containerRef}) => {
     const [numPages, setNumPages] = useState<number>(pages);
     const [zoomValue, setZoomValue] = useState<number>(100);
     const [viewportHeight, setViewportHeight] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const renderPage = useCallback((pageNum: number, pdf = pdfFile) => {
         pdf && pdf.getPage(pageNum).then(function(page: PDFPageProxy) {
+            setLoading(true)
             const canvas = canvasRef.current!;
             const viewport = page.getViewport({scale: 1});
             const desiredHeight = document.body.clientHeight - 65;
@@ -57,6 +60,7 @@ const BookReaderPage: FC<BookReaderProps> = ({containerRef}) => {
             setNumPages(pdf.numPages);
             setViewportHeight(scaledViewport.height)
             page.render(renderContext);
+            setLoading(false)
         });
         dispatch(bookSlice.actions.uploadingBookSuccess());
     }, [pdfFile, zoomValue, dispatch]);
@@ -89,8 +93,11 @@ const BookReaderPage: FC<BookReaderProps> = ({containerRef}) => {
         return () => {canvas.style.width = "calc(280px + (1140 - 280) * ((100vw - 280px) / (1440 - 280)))"}
     }, [containerRef]);
     useEffect(() => {
+        setLoading(true)
+        dispatch(bookSlice.actions.fetchingBooks());
         const loadingTask = pdfJs.getDocument(book_path);
         loadingTask.promise.then(loadedPdf => {
+            setLoading(false)
             setPdfFile(loadedPdf)
         });
     }, [book_path, dispatch]);
@@ -113,6 +120,7 @@ const BookReaderPage: FC<BookReaderProps> = ({containerRef}) => {
 
     return (
         <BookReaderBlock>
+            {loading && <Loading/>}
             <PageBlock viewportHeight={viewportHeight}>
                 <canvas ref={canvasRef}></canvas>
             </PageBlock>

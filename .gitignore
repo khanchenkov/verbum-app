@@ -4,10 +4,11 @@
 my_notes.txt
 
 server/data/
+server/public/
+client/build/
 
 **/logs
 npm-debug.log*
-server/public/build
 *.local
 
 .idea

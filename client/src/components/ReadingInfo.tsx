@@ -49,7 +49,7 @@ const ReadingInfo: FC<ReadingInfoProps> = ({days_reading, reading_time , daily_g
         return new Date(secondsToTime * 1000).toISOString().slice(11, 19);
     }
     const getDegreeProgress = (reading: number, read: number) => {
-        if (reading_time === 0) {
+        if (reading === 0 && read === 0) {
             return 45;
         }
         return reading! > read! ? 225 : (180 * Number(reading) / Number(read) + 45);
