@@ -163,15 +163,15 @@ export const SliderInput = styled.input`
     cursor: pointer;
   }
 `;
-
-interface ProfileImageStyleProps {
-    size: string
-}
-export const ProfileImage = styled.img<ProfileImageStyleProps>`
+export const BurgerButton = styled.button`
   display: block;
-  width: ${(props) => `${props.size}`};
-  height: ${(props) => `${props.size}`};
-  border-radius: 100%;
-  object-fit: cover;
+  border: none;
+  height: 35px;
+  padding-top: 5px;
+  border-radius: 5px;
+  background: none;
   cursor: pointer;
+  &:hover {
+    background-color: ${(props) => props.theme.border};
+  }
 `;

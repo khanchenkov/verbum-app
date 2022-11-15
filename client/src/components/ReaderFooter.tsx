@@ -1,7 +1,7 @@
 import React, {useState, FC} from "react";
 import styled from "styled-components";
 import NavModal from "./NavModal";
-import {ProfileImage, SliderInput} from "../styles/UILibrary";
+import {BurgerButton, SliderInput} from "../styles/UILibrary";
 import {useAppSelector} from "../hooks/redux";
 import {ReaderFooterProps} from "../types/IProps";
 
@@ -78,11 +78,13 @@ const ReaderFooter: FC<ReaderFooterProps> = ({pageNumber, numPages, changePageNe
     return (
         <FooterBlock>
             <ProfileModalBlock>
-                <ProfileImage
-                    src={avatar}
-                    onClick={showModal}
-                    size={"25px"}
-                />
+                <BurgerButton onClick={showModal}>
+                    <svg width="30" height="18" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="30" height="4" rx="2" fill="#C5A45B"/>
+                        <rect y="7" width="30" height="4" rx="2" fill="#C5A45B"/>
+                        <rect y="14" width="30" height="4" rx="2" fill="#C5A45B"/>
+                    </svg>
+                </BurgerButton>
                 <NavModal
                     active={modalActive}
                     setActive={setModalActive}

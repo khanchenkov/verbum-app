@@ -7,6 +7,7 @@ import {logoutUser} from "../store/actions/AuthActionCreators";
 import {useAppDispatch} from "../hooks/redux";
 import DarkModeButton from "./DarkModeButton";
 import {ModalContentStyleProps} from "../types/IStyled";
+import BookImageCap from "../assets/images/book-image-cap.jpg";
 
 const ModalContent = styled.div<ModalContentStyleProps>`
   position: absolute;
@@ -71,7 +72,13 @@ const NavModal: FC<NavModalProps> = ({active, setActive, avatar, name, position}
     return (
         <Modal onClick={hideModal} active={active}>
             <ModalContent onClick={e => e.stopPropagation()} position={position}>
-                <UserImage src={avatar}/>
+                <UserImage
+                    src={avatar}
+                    onError={({ currentTarget }) => {
+                        currentTarget.onerror = null;
+                        currentTarget.src=BookImageCap;
+                    }}
+                />
                 <UserName>{name}</UserName>
                 <Divider/>
                 <SettingsList>

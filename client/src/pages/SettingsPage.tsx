@@ -7,6 +7,7 @@ import AuthService from "../services/AuthService";
 import UserService from "../services/UserService";
 import {UserImageProps} from "../types/IProps";
 import {updateUserInfo} from "../store/actions/UserActionCreators";
+import BookImageCap from "../assets/images/book-image-cap.jpg";
 
 const ProfilePageBlock = styled.div``;
 const BannerBlock = styled.div`
@@ -170,7 +171,14 @@ const SettingsPage = () => {
             </BannerBlock>
             <UserForm encType="multipart/form-data" onSubmit={(e)=>formHandler(e)}>
                 <ImageBlock>
-                    <UserImage src={tmpAvatar || avatar} alt="Profile Image"/>
+                    <UserImage
+                        src={tmpAvatar || avatar}
+                        alt="Profile Image"
+                        onError={({ currentTarget }) => {
+                            currentTarget.onerror = null;
+                            currentTarget.src=BookImageCap;
+                        }}
+                    />
                     <SendImageInput
                         type="file"
                         name="avatar"

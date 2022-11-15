@@ -1,6 +1,7 @@
 import React, {FC} from "react";
 import styled from "styled-components";
 import {UserInfoProps} from "../types/IProps";
+import BookImageCap from "../assets/images/book-image-cap.jpg";
 
 const UserInfoBlock = styled.div`
   display: flex;
@@ -56,7 +57,13 @@ const UserStats = styled.div`
 const UserInfo: FC<UserInfoProps> = ({avatar, name, status, booksReading, booksRead}) => {
     return (
         <UserInfoBlock>
-            <UserImage src={avatar}/>
+            <UserImage
+                src={avatar}
+                onError={({ currentTarget }) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src=BookImageCap;
+                }}
+            />
             <UserData>
                 <UserName>{name}</UserName>
                 <UserStatus>{status}</UserStatus>

@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react';
 import styled, {css} from "styled-components";
-import {Container, SignUpButton, ProfileImage} from "../styles/UILibrary";
+import {Container, SignUpButton, BurgerButton} from "../styles/UILibrary";
 import {useLocation, useNavigate} from "react-router-dom";
 import Logo from "./Logo";
 import NavModal from "./NavModal";
@@ -51,6 +51,7 @@ const LogInButton = styled.button`
   }
 `;
 
+
 const Header: FC<HeaderProps> = ({isAuth}) => {
     const {avatar, user_name} = useAppSelector(state => state.user.userInfo);
     const [modalActive, setModalActive] = useState<boolean>(false);
@@ -78,11 +79,13 @@ const Header: FC<HeaderProps> = ({isAuth}) => {
                         isAuth ?
                         <>
                             <div>
-                                <ProfileImage
-                                    src={avatar}
-                                    onClick={showModal}
-                                    size={"35px"}
-                                />
+                                <BurgerButton onClick={showModal}>
+                                    <svg width="30" height="18" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="30" height="4" rx="2" fill="#C5A45B"/>
+                                        <rect y="7" width="30" height="4" rx="2" fill="#C5A45B"/>
+                                        <rect y="14" width="30" height="4" rx="2" fill="#C5A45B"/>
+                                    </svg>
+                                </BurgerButton>
                             </div>
                             <NavModal
                                 active={modalActive}
