@@ -4,8 +4,14 @@ const ApiError = require("../exceptions/api.error");
 const tokenService = require("./token.service");
 const bookFileService = require("./book-file.service");
 const iconv = require("iconv-lite");
+const {merge, updateDbInterval} = require("../util/index");
 
 class BookService {
+    books = new Map();
+    interval;
+    constructor() {
+        this.start();
+    }
     async uploadBook(file, refreshToken) {
         const userId = tokenService.validateRefreshToken(refreshToken).tokenPayload.id;
         if (!file || Object.keys(file).length === 0) {
@@ -37,9 +43,7 @@ class BookService {
     }
     async getUserBooks(refreshToken) {
         const userId = tokenService.validateRefreshToken(refreshToken).tokenPayload.id;
-        return pg("book")
-            .select("*")
-            .where("user_id", userId);
+        return await pg("book").select("*").where("user_id", userId).map(x => merge(x, this.books));
     }
     async removeBook(id) {
         const [removedBook] = await pg("book").del().where("id", id).returning("*");
@@ -55,21 +59,18 @@ class BookService {
                 console.log("Thumbnail was deleted.");
             }
         });
+        this.books.delete(id);
     }
-    async updateReadingData(refreshToken, bookId, readingTime, currentPage, pages) {
-        const userId = tokenService.validateRefreshToken(refreshToken).tokenPayload.id;
-
-        let isReading, isRead;
-        if (currentPage + 3 >= pages) {
-            isRead = true;
-            isReading = false;
-        } else {
-            isRead = false;
-            isReading = true;
-        }
-        await pg("user").update({reading_time: readingTime}).where("id", userId)
-        await pg("book").update({current_page: currentPage, is_read: isRead, is_reading: isReading}).where("id", bookId);
+    async updateReadingData(refreshToken, bookId, readingTime, current_page, pages) {
+        const is_read = current_page + 3 >= pages, is_reading = !is_read;
+        this.books.set(bookId, {current_page, is_reading, is_read});
         return {message: "Book was successfully updated."};
+    }
+    start() {
+        this.interval = updateDbInterval(this.books, "books", 1000 * 60 * 10);
+    }
+    stop() {
+        clearInterval(this.interval);
     }
     // async createBookList(name, id, refreshToken) {
     //     const userId = id === null ? tokenService.validateRefreshToken(refreshToken).tokenPayload.id : id;

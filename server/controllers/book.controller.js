@@ -1,4 +1,5 @@
 const bookService = require('../services/book.service');
+const userService = require('../services/user.service');
 
 class BookController {
     async uploadBook(req, res, next) {
@@ -32,6 +33,7 @@ class BookController {
         try {
             const {refreshToken} = req.cookies;
             const {bookId, readingTime, currentPage, pages} = req.body;
+            userService.updateReadingData(refreshToken, readingTime);
             const updatedResult = await bookService.updateReadingData(refreshToken, bookId, readingTime, currentPage, pages);
             return res.json(updatedResult);
         } catch (e) {
